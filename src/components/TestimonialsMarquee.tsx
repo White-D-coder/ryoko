@@ -37,7 +37,7 @@ const TESTIMONIALS: Testimonial[] = [
     name: 'Elena & Nikolai Rostova',
     location: 'Sydney, Australia',
     tourName: 'Sakura 2027 Special',
-    avatar: '/images/pexels-[#121212]-316220-34991523.jpg',
+    avatar: '/images/pexels-huy-phan-316220-34991523.jpg',
     rating: 5,
     review:
       'Seeing peak cherry blossoms along Meguro River and staying at a 100-year-old wooden ryokan in Ginzan Onsen was absolute magic.',
