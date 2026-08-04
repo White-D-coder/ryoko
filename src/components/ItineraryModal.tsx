@@ -38,7 +38,10 @@ export const ItineraryModal: React.FC<ItineraryModalProps> = ({
 
           {/* Title overlay */}
           <div className="absolute bottom-6 left-6 right-6 text-white">
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="flex flex-wrap gap-2 mb-2 items-center">
+              <span className="px-2.5 py-0.5 rounded-full bg-rose-600 text-white text-[11px] font-extrabold uppercase tracking-wider shadow">
+                {packageData.citiesStay}
+              </span>
               {packageData.badges.map((b, i) => (
                 <span
                   key={i}
@@ -51,7 +54,30 @@ export const ItineraryModal: React.FC<ItineraryModalProps> = ({
             <h2 className="font-cinzel text-2xl sm:text-4xl font-bold tracking-tight">
               {packageData.title}
             </h2>
-            <p className="text-slate-200 text-xs sm:text-sm mt-1 font-light">
+            <div className="flex items-center gap-3 mt-1.5 mb-1">
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenBooking(packageData);
+                }}
+                className="text-xs font-semibold text-rose-300 hover:text-white transition-all cursor-pointer hover:underline underline-offset-4 decoration-rose-400"
+              >
+                Group Tour
+              </button>
+              <span className="text-white/40 text-xs">•</span>
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenBooking(packageData);
+                }}
+                className="text-xs font-semibold text-rose-300 hover:text-white transition-all cursor-pointer hover:underline underline-offset-4 decoration-rose-400"
+              >
+                Private Tour
+              </button>
+            </div>
+            <p className="text-slate-200 text-xs sm:text-sm font-light">
               {packageData.subtitle}
             </p>
           </div>

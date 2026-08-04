@@ -31,14 +31,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* 1. Hero Section */}
       <Hero onSearch={() => navigate('/packages')} />
 
-      {/* 2. Interactive Region Vector Map Section ("EXPLORE JAPAN BY REGION") */}
-      <InteractiveMap
-        onSelectRegion={(regionId) => {
-          onSelectRegionFilter(regionId);
-          navigate('/packages');
-        }}
-        selectedRegionId={selectedRegionFilter}
-      />
+      {/* 2. Dynamic Expanding Bento Grid Showcase ("ESSENCE OF JAPANESE TRAVEL") */}
+      <StickerCutouts />
 
       {/* 3. Tourism Board Alliances Marquee Section */}
       <TourismAlliancesMarquee />
@@ -66,8 +60,14 @@ export const HomePage: React.FC<HomePageProps> = ({
         </button>
       </div>
 
-      {/* 6. Dynamic Expanding Bento Grid Showcase */}
-      <StickerCutouts />
+      {/* 6. Interactive Region Vector Map Section ("EXPLORE JAPAN BY REGION") */}
+      <InteractiveMap
+        onSelectRegion={(regionId) => {
+          onSelectRegionFilter(regionId);
+          navigate('/packages');
+        }}
+        selectedRegionId={selectedRegionFilter}
+      />
 
       {/* 7. Interactive Sakura Forecast Planner */}
       <SakuraPlanner onSelectPackage={onViewItinerary} />

@@ -45,8 +45,9 @@ export const PackagesPage: React.FC<PackagesPageProps> = ({
         </div>
       </section>
 
-      {/* Main Packages Component */}
+      {/* Main Packages Component with Detailed Card List Layout */}
       <TourPackages
+        isDetailedView={true}
         activeRegionFilter={selectedRegionFilter}
         onClearRegionFilter={onClearRegionFilter}
         onViewItinerary={onViewItinerary}

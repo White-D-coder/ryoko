@@ -4,6 +4,12 @@ export interface TourPackage {
   subtitle: string;
   category: 'sakura' | 'golden' | 'luxury' | 'anime' | 'culture';
   regionId: string;
+  citiesStay: string;
+  citiesCount?: number;
+  hotelsCount?: number;
+  transfersCount?: number;
+  activitiesCount?: number;
+  hotelRating?: string;
   durationDays: number;
   durationNights: number;
   groupSize: string;
@@ -185,6 +191,12 @@ export const TOUR_PACKAGES: TourPackage[] = [
     subtitle: 'Classic Tokyo, Mt. Fuji & Kyoto immersed in peak cherry blossom season',
     category: 'sakura',
     regionId: 'kansai',
+    citiesStay: 'Tokyo 3N, Kyoto 4N, Osaka 2N',
+    citiesCount: 3,
+    hotelsCount: 3,
+    transfersCount: 5,
+    activitiesCount: 14,
+    hotelRating: '5★ Boutique Hotel',
     durationDays: 10,
     durationNights: 9,
     groupSize: 'Max 12 Guests',
@@ -219,6 +231,12 @@ export const TOUR_PACKAGES: TourPackage[] = [
     subtitle: 'High-speed Shinkansen journey through Tokyo, Hakone, Kyoto & Osaka',
     category: 'golden',
     regionId: 'kanto',
+    citiesStay: 'Tokyo 3N, Hakone 1N, Kyoto 2N',
+    citiesCount: 3,
+    hotelsCount: 3,
+    transfersCount: 4,
+    activitiesCount: 10,
+    hotelRating: '4★ Hotel',
     durationDays: 7,
     durationNights: 6,
     groupSize: 'Max 14 Guests',
@@ -250,6 +268,12 @@ export const TOUR_PACKAGES: TourPackage[] = [
     subtitle: 'Indulgent hot springs, Michelin dining & private temple sanctuaries',
     category: 'luxury',
     regionId: 'tohoku',
+    citiesStay: 'Tokyo 1N, Ginzan Onsen 2N, Kyoto 4N',
+    citiesCount: 3,
+    hotelsCount: 3,
+    transfersCount: 6,
+    activitiesCount: 12,
+    hotelRating: '5★ Luxury Ryokan',
     durationDays: 8,
     durationNights: 7,
     groupSize: 'Private Ultra-VIP',
@@ -282,6 +306,12 @@ export const TOUR_PACKAGES: TourPackage[] = [
     subtitle: 'From Akihabara tech arcades to Ghibli Park & Nintendo World',
     category: 'anime',
     regionId: 'kanto',
+    citiesStay: 'Tokyo 4N, Nagoya 1N, Osaka 3N',
+    citiesCount: 3,
+    hotelsCount: 3,
+    transfersCount: 5,
+    activitiesCount: 16,
+    hotelRating: '4★ Themed Hotel',
     durationDays: 9,
     durationNights: 8,
     groupSize: 'Max 10 Fans',
@@ -315,6 +345,12 @@ export const TOUR_PACKAGES: TourPackage[] = [
     subtitle: 'Niseko skiing, Otaru winter canals & Sapporo snow culinary magic',
     category: 'culture',
     regionId: 'hokkaido',
+    citiesStay: 'Sapporo 3N, Niseko 2N, Noboribetsu 2N',
+    citiesCount: 3,
+    hotelsCount: 3,
+    transfersCount: 4,
+    activitiesCount: 11,
+    hotelRating: '5★ Snow Resort',
     durationDays: 8,
     durationNights: 7,
     groupSize: 'Max 12 Guests',
@@ -347,6 +383,12 @@ export const TOUR_PACKAGES: TourPackage[] = [
     subtitle: 'Seto Inland Sea contemporary art, Hiroshima peace & floating Torii',
     category: 'culture',
     regionId: 'chugoku_shikoku',
+    citiesStay: 'Naoshima 2N, Hiroshima 1N, Miyajima 3N',
+    citiesCount: 3,
+    hotelsCount: 3,
+    transfersCount: 5,
+    activitiesCount: 13,
+    hotelRating: '4★ Heritage Stays',
     durationDays: 7,
     durationNights: 6,
     groupSize: 'Max 10 Guests',

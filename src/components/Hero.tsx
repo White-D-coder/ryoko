@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, Compass, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { SakuraCanvas } from './SakuraCanvas';
 
 interface HeroProps {
-  onSearch: (filters: { season: string; duration: string; style: string }) => void;
+  onSearch: (filters: { season: string; duration: string; departureMonth: string }) => void;
 }
 
 const HERO_SLIDES = [
@@ -24,11 +24,64 @@ const HERO_SLIDES = [
   },
 ];
 
+const DEPARTURE_MONTHS_BY_SEASON: Record<string, { label: string; value: string }[]> = {
+  'Spring/Sakura': [
+    { label: 'All Spring Months', value: 'All Spring' },
+    { label: 'March 2026', value: 'March 2026' },
+    { label: 'April 2026', value: 'April 2026' },
+    { label: 'May 2026', value: 'May 2026' },
+    { label: 'March 2027 (Peak Sakura)', value: 'March 2027' },
+    { label: 'April 2027 (Peak Sakura)', value: 'April 2027' },
+    { label: 'May 2027', value: 'May 2027' },
+  ],
+  'Autumn Foliage': [
+    { label: 'All Autumn Months', value: 'All Autumn' },
+    { label: 'September 2026', value: 'September 2026' },
+    { label: 'October 2026', value: 'October 2026' },
+    { label: 'November 2026 (Peak Foliage)', value: 'November 2026' },
+    { label: 'September 2027', value: 'September 2027' },
+    { label: 'October 2027', value: 'October 2027' },
+    { label: 'November 2027', value: 'November 2027' },
+  ],
+  'Winter Snow': [
+    { label: 'All Winter Months', value: 'All Winter' },
+    { label: 'December 2026', value: 'December 2026' },
+    { label: 'January 2027 (Peak Snow)', value: 'January 2027' },
+    { label: 'February 2027 (Snow Festival)', value: 'February 2027' },
+    { label: 'December 2027', value: 'December 2027' },
+  ],
+  'Summer Festivals': [
+    { label: 'All Summer Months', value: 'All Summer' },
+    { label: 'June 2026', value: 'June 2026' },
+    { label: 'July 2026 (Gion Matsuri)', value: 'July 2026' },
+    { label: 'August 2026 (Nebuta Festival)', value: 'August 2026' },
+    { label: 'June 2027', value: 'June 2027' },
+    { label: 'July 2027', value: 'July 2027' },
+    { label: 'August 2027', value: 'August 2027' },
+  ],
+  'All Seasons': [
+    { label: 'All Departure Months', value: 'All Months' },
+    { label: 'August 2026', value: 'August 2026' },
+    { label: 'September 2026', value: 'September 2026' },
+    { label: 'October 2026', value: 'October 2026' },
+    { label: 'November 2026', value: 'November 2026' },
+    { label: 'December 2026', value: 'December 2026' },
+    { label: 'January 2027', value: 'January 2027' },
+    { label: 'February 2027', value: 'February 2027' },
+    { label: 'March 2027', value: 'March 2027' },
+    { label: 'April 2027', value: 'April 2027' },
+    { label: 'May 2027', value: 'May 2027' },
+    { label: 'June 2027', value: 'June 2027' },
+    { label: 'July 2027', value: 'July 2027' },
+    { label: 'August 2027', value: 'August 2027' },
+  ],
+};
+
 export const Hero: React.FC<HeroProps> = ({ onSearch }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [selectedSeason, setSelectedSeason] = useState('Spring/Sakura');
   const [selectedDuration, setSelectedDuration] = useState('All Durations');
-  const [selectedStyle, setSelectedStyle] = useState('All Styles');
+  const [selectedDepartureMonth, setSelectedDepartureMonth] = useState('All Spring');
 
   // Automatic Hero Carousel Image Rotation (Every 5 seconds)
   useEffect(() => {
@@ -38,12 +91,18 @@ export const Hero: React.FC<HeroProps> = ({ onSearch }) => {
     return () => clearInterval(timer);
   }, []);
 
+  const handleSeasonChange = (season: string) => {
+    setSelectedSeason(season);
+    const months = DEPARTURE_MONTHS_BY_SEASON[season] || DEPARTURE_MONTHS_BY_SEASON['Spring/Sakura'];
+    setSelectedDepartureMonth(months[0].value);
+  };
+
   const handleFinderSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch({
       season: selectedSeason,
       duration: selectedDuration,
-      style: selectedStyle,
+      departureMonth: selectedDepartureMonth,
     });
 
     const packagesSection = document.getElementById('packages-section');
@@ -51,6 +110,9 @@ export const Hero: React.FC<HeroProps> = ({ onSearch }) => {
       packagesSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const activeDepartureMonths =
+    DEPARTURE_MONTHS_BY_SEASON[selectedSeason] || DEPARTURE_MONTHS_BY_SEASON['Spring/Sakura'];
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col justify-between overflow-hidden pt-28 pb-10">
@@ -119,13 +181,14 @@ export const Hero: React.FC<HeroProps> = ({ onSearch }) => {
               </label>
               <select
                 value={selectedSeason}
-                onChange={(e) => setSelectedSeason(e.target.value)}
+                onChange={(e) => handleSeasonChange(e.target.value)}
                 className="w-full bg-black/50 border border-white/20 px-3 py-2.5 text-xs font-semibold text-white focus:outline-none rounded-none"
               >
                 <option value="Spring/Sakura" className="bg-slate-900 text-white">Spring / Sakura (Mar–May)</option>
                 <option value="Autumn Foliage" className="bg-slate-900 text-white">Autumn Foliage (Sep–Nov)</option>
                 <option value="Winter Snow" className="bg-slate-900 text-white">Winter / Snow (Dec–Feb)</option>
                 <option value="Summer Festivals" className="bg-slate-900 text-white">Summer Festivals (Jun–Aug)</option>
+                <option value="All Seasons" className="bg-slate-900 text-white">All Seasons / Anytime</option>
               </select>
             </div>
 
@@ -139,27 +202,35 @@ export const Hero: React.FC<HeroProps> = ({ onSearch }) => {
                 onChange={(e) => setSelectedDuration(e.target.value)}
                 className="w-full bg-black/50 border border-white/20 px-3 py-2.5 text-xs font-semibold text-white focus:outline-none rounded-none"
               >
-                <option value="All Durations" className="bg-slate-900 text-white">All Durations</option>
-                <option value="7 Days" className="bg-slate-900 text-white">7 Days (Express Route)</option>
-                <option value="10 Days" className="bg-slate-900 text-white">10 Days (Golden Route)</option>
-                <option value="14+ Days" className="bg-slate-900 text-white">14+ Days (Grand Explorer)</option>
+                <option value="Any Duration" className="bg-slate-900 text-white">Any Duration</option>
+                <option value="1 night" className="bg-slate-900 text-white">1 night</option>
+                <option value="2 nights" className="bg-slate-900 text-white">2 nights</option>
+                <option value="3 nights" className="bg-slate-900 text-white">3 nights</option>
+                <option value="4 nights" className="bg-slate-900 text-white">4 nights</option>
+                <option value="5 - 6 nights" className="bg-slate-900 text-white">5 - 6 nights</option>
+                <option value="7 - 9 nights" className="bg-slate-900 text-white">7 - 9 nights</option>
+                <option value="10 - 13 nights" className="bg-slate-900 text-white">10 - 13 nights</option>
+                <option value="14 - 17 nights" className="bg-slate-900 text-white">14 - 17 nights</option>
+                <option value="18 - 20 nights" className="bg-slate-900 text-white">18 - 20 nights</option>
+                <option value="21 - 24 nights" className="bg-slate-900 text-white">21 - 24 nights</option>
               </select>
             </div>
 
             <div className="flex flex-col text-left space-y-1">
               <label className="text-[10px] font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1">
-                <Compass className="w-3 h-3 text-slate-300" />
-                Travel Style
+                <Calendar className="w-3 h-3 text-slate-300" />
+                Departure Month
               </label>
               <select
-                value={selectedStyle}
-                onChange={(e) => setSelectedStyle(e.target.value)}
+                value={selectedDepartureMonth}
+                onChange={(e) => setSelectedDepartureMonth(e.target.value)}
                 className="w-full bg-black/50 border border-white/20 px-3 py-2.5 text-xs font-semibold text-white focus:outline-none rounded-none"
               >
-                <option value="All Styles" className="bg-slate-900 text-white">All Styles</option>
-                <option value="Golden Route" className="bg-slate-900 text-white">Golden Route (Classic)</option>
-                <option value="Luxury Onsen" className="bg-slate-900 text-white">Luxury Onsen Ryokan</option>
-                <option value="Anime & Tech" className="bg-slate-900 text-white">Anime & Tech Culture</option>
+                {activeDepartureMonths.map((m) => (
+                  <option key={m.value} value={m.value} className="bg-slate-900 text-white">
+                    {m.label}
+                  </option>
+                ))}
               </select>
             </div>
 

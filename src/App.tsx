@@ -9,6 +9,7 @@ import { PackagesPage } from './pages/PackagesPage';
 import { SakuraPlannerPage } from './pages/SakuraPlannerPage';
 import { GuidePage } from './pages/GuidePage';
 import { ContactPage } from './pages/ContactPage';
+import { AboutPage } from './pages/AboutPage';
 import { PackageDetailPage } from './pages/PackageDetailPage';
 import { BookingModal } from './components/BookingModal';
 import { LeadMagnetModal } from './components/LeadMagnetModal';
@@ -146,6 +147,10 @@ function AppRoutes({
       <Route
         path="/contact"
         element={<ContactPage />}
+      />
+      <Route
+        path="/about"
+        element={<AboutPage />}
       />
     </Routes>
   );

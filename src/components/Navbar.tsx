@@ -30,6 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navItems = [
     { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
     { path: '/destinations', label: 'Destinations' },
     { path: '/packages', label: 'Tours' },
     { path: '/sakura-planner', label: 'Sakura 2027' },
