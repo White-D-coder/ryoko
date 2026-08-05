@@ -7,16 +7,11 @@ interface DestinationsPageProps {
   onSelectRegionFilter: (regionId: string) => void;
 }
 
-export const DestinationsPage: React.FC<DestinationsPageProps> = ({ onSelectRegionFilter }) => {
+export const DestinationsPage: React.FC<DestinationsPageProps> = () => {
   const navigate = useNavigate();
   const [activeRegionTab, setActiveRegionTab] = useState(REGIONS[0].id);
 
   const currentRegion: RegionData = REGIONS.find((r: RegionData) => r.id === activeRegionTab) || REGIONS[0];
-
-  const handleExplorePackages = (regionId: string) => {
-    onSelectRegionFilter(regionId);
-    navigate('/packages');
-  };
 
   return (
     <div className="min-h-screen bg-[#FAF9F5] pt-24 pb-20">
@@ -142,12 +137,15 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = ({ onSelectRegi
             </div>
 
             {/* CTA */}
-            <div className="pt-2">
+            <div className="pt-2 flex items-center gap-3 flex-wrap">
               <button
-                onClick={() => handleExplorePackages(currentRegion.id)}
+                onClick={() => {
+                  const destId = currentRegion.id === 'kanto' ? 'tokyo' : currentRegion.id === 'kansai' ? 'kyoto' : currentRegion.id;
+                  navigate(`/destination/${destId}`);
+                }}
                 className="w-full sm:w-auto bg-slate-900 hover:bg-rose-600 text-white font-bold px-8 py-3.5 text-xs uppercase tracking-widest shadow-xl transition-colors cursor-pointer flex items-center justify-center gap-2 rounded-none group"
               >
-                <span>View {currentRegion.name} Tour Packages</span>
+                <span>Read Full {currentRegion.name} Blog Guide</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -156,12 +154,14 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = ({ onSelectRegi
 
         {/* 6 Full Regional Photography Cards Grid */}
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {REGIONS.map((reg: RegionData) => (
-            <div
-              key={reg.id}
-              onClick={() => handleExplorePackages(reg.id)}
-              className="group relative h-[380px] sm:h-[420px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-end cursor-pointer border border-white/20 rounded-none"
-            >
+          {REGIONS.map((reg: RegionData) => {
+            const destId = reg.id === 'kanto' ? 'tokyo' : reg.id === 'kansai' ? 'kyoto' : reg.id;
+            return (
+              <div
+                key={reg.id}
+                onClick={() => navigate(`/destination/${destId}`)}
+                className="group relative h-[380px] sm:h-[420px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-end cursor-pointer border border-white/20 rounded-none"
+              >
               <img
                 src={reg.heroImage}
                 alt={reg.name}
@@ -189,7 +189,8 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = ({ onSelectRegi
                 </div>
               </div>
             </div>
-          ))}
+          );
+        })}
         </div>
       </section>
     </div>

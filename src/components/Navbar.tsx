@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Sparkles } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe, DollarSign } from 'lucide-react';
 import { SakuraIcon } from './SakuraIcon';
+import { useCurrency, type Currency } from '../context/CurrencyContext';
 
 interface NavbarProps {
-  currentCurrency: string;
-  onCurrencyChange: (curr: string) => void;
+  currentCurrency?: string;
+  onCurrencyChange?: (curr: string) => void;
   onOpenInquiry: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({
-  currentCurrency,
-  onCurrencyChange,
-  onOpenInquiry,
-}) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
+  const { currency, setCurrency } = useCurrency();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
 
+  const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
+  const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+
+  const [activeLang, setActiveLang] = useState<'EN' | 'JA' | 'HI'>('EN');
+
+  const location = useLocation();
   const isHome = location.pathname === '/';
 
   useEffect(() => {
@@ -28,16 +32,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { path: '/', label: 'Home' },
-    { path: '/about', label: 'About' },
-    { path: '/destinations', label: 'Destinations' },
-    { path: '/packages', label: 'Tours' },
-    { path: '/sakura-planner', label: 'Sakura 2027' },
-    { path: '/guide', label: 'Guide & Culture' },
-    { path: '/contact', label: 'Contact' },
-  ];
-
   const headerBgClass = isScrolled
     ? 'glass-organic bg-white/80 shadow-lg border-b border-white/50 py-4'
     : isHome
@@ -47,8 +41,38 @@ export const Navbar: React.FC<NavbarProps> = ({
   const logoColorClass = isScrolled || !isHome ? 'text-[#0F172A]' : 'text-white';
   const navTextColorClass = isScrolled || !isHome ? 'text-slate-800' : 'text-slate-100';
 
+  const eventItems = [
+    { path: '/events/sakura-2027', label: 'Sakura 2027' },
+    { path: '/events/momiji-autumn', label: 'Momiji Autumn' },
+    { path: '/events/gion-matsuri', label: 'Gion Matsuri' },
+    { path: '/events/sapporo-snow', label: 'Sapporo Snow Festival' },
+    { path: '/events/sumida-fireworks', label: 'Sumidagawa Fireworks' },
+  ];
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerBgClass}`}>
+      {/* Styles for Expanding Hover Underline Animation */}
+      <style>{`
+        .nav-link-underline {
+          position: relative;
+          padding-bottom: 4px;
+        }
+        .nav-link-underline::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0%;
+          height: 2px;
+          background-color: #E11D48;
+          transition: width 0.3s ease-in-out;
+        }
+        .nav-link-underline:hover::after,
+        .nav-link-underline-active::after {
+          width: 100%;
+        }
+      `}</style>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2.5 group">
@@ -58,119 +82,230 @@ export const Navbar: React.FC<NavbarProps> = ({
           </span>
         </Link>
 
-        {/* Desktop Nav Items with On-Hover Expanding Underline */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `text-xs font-bold uppercase tracking-[0.18em] transition-colors relative py-1 cursor-pointer ${
-                  navTextColorClass
-                } ${
-                  isActive
-                    ? 'text-rose-500 font-extrabold after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-rose-500 after:scale-x-100'
-                    : 'after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-rose-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left hover:text-rose-500'
-                }`
-              }
+        {/* Desktop Navigation Links with Signature Underline Hover Animation */}
+        <nav className="hidden lg:flex items-center gap-7">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `nav-link-underline text-xs font-bold uppercase tracking-wider transition-colors hover:text-rose-500 ${navTextColorClass} ${
+                isActive ? 'text-rose-600 font-black nav-link-underline-active' : ''
+              }`
+            }
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `nav-link-underline text-xs font-bold uppercase tracking-wider transition-colors hover:text-rose-500 ${navTextColorClass} ${
+                isActive ? 'text-rose-600 font-black nav-link-underline-active' : ''
+              }`
+            }
+          >
+            About
+          </NavLink>
+
+          <NavLink
+            to="/destinations"
+            className={({ isActive }) =>
+              `nav-link-underline text-xs font-bold uppercase tracking-wider transition-colors hover:text-rose-500 ${navTextColorClass} ${
+                isActive ? 'text-rose-600 font-black nav-link-underline-active' : ''
+              }`
+            }
+          >
+            Destinations
+          </NavLink>
+
+          <NavLink
+            to="/packages"
+            className={({ isActive }) =>
+              `nav-link-underline text-xs font-bold uppercase tracking-wider transition-colors hover:text-rose-500 ${navTextColorClass} ${
+                isActive ? 'text-rose-600 font-black nav-link-underline-active' : ''
+              }`
+            }
+          >
+            Tours
+          </NavLink>
+
+          {/* EVENTS DROPDOWN */}
+          <div
+            className="relative"
+            onMouseEnter={() => setEventsDropdownOpen(true)}
+            onMouseLeave={() => setEventsDropdownOpen(false)}
+          >
+            <button
+              className={`nav-link-underline inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer hover:text-rose-500 ${navTextColorClass}`}
             >
-              {item.label}
-            </NavLink>
-          ))}
+              <span>Events</span>
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+
+            {eventsDropdownOpen && (
+              <div className="absolute top-full left-0 w-56 bg-white border border-slate-200 shadow-xl py-2 z-50">
+                {eventItems.map((evt) => (
+                  <Link
+                    key={evt.path}
+                    to={evt.path}
+                    onClick={() => setEventsDropdownOpen(false)}
+                    className="block px-4 py-2 text-xs font-bold text-slate-800 hover:bg-rose-50 hover:text-rose-600 transition-colors"
+                  >
+                    {evt.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `nav-link-underline text-xs font-bold uppercase tracking-wider transition-colors hover:text-rose-500 ${navTextColorClass} ${
+                isActive ? 'text-rose-600 font-black nav-link-underline-active' : ''
+              }`
+            }
+          >
+            Contact
+          </NavLink>
         </nav>
 
-        {/* Pure Text Right Actions (No Boxes, On-Hover Animated Underlines) */}
+        {/* Right Utility Navigation Links (NO SOLID BOXES, ONLY HOVER UNDERLINE ANIMATION) */}
         <div className="hidden lg:flex items-center gap-6">
-          {/* Currency Switcher Dropdown (Pure Text) */}
-          <div className="relative group">
+          {/* CURRENCY SELECTOR DROPDOWN */}
+          <div className="relative">
             <button
-              className={`relative py-1 flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase cursor-pointer transition-colors ${navTextColorClass} hover:text-rose-500 after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-rose-500 after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left`}
+              onClick={() => {
+                setCurrencyDropdownOpen(!currencyDropdownOpen);
+                setLangDropdownOpen(false);
+              }}
+              className={`nav-link-underline inline-flex items-center gap-1 text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer hover:text-rose-500 ${navTextColorClass}`}
             >
-              <span>{currentCurrency.split(' ')[0]}</span>
-              <ChevronDown className="w-3 h-3 opacity-70" />
+              <DollarSign className="w-3.5 h-3.5" />
+              <span>{currency}</span>
+              <ChevronDown className="w-3 h-3" />
             </button>
-            <div className="absolute right-0 top-full mt-2 hidden group-hover:block w-32 glass-organic bg-white/95 text-[#0F172A] shadow-xl py-2 text-xs overflow-hidden z-50">
-              {['USD ($)', 'EUR (€)', 'JPY (¥)', 'GBP (£)'].map((curr) => (
+
+            {currencyDropdownOpen && (
+              <div className="absolute top-full right-0 mt-2 w-36 bg-white border border-slate-200 shadow-xl py-1 z-50 text-slate-900 text-xs font-mono">
+                {(['USD', 'INR', 'JPY', 'EUR'] as Currency[]).map((curr) => (
+                  <button
+                    key={curr}
+                    onClick={() => {
+                      setCurrency(curr);
+                      setCurrencyDropdownOpen(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 font-bold hover:bg-rose-50 hover:text-rose-600 cursor-pointer ${
+                      currency === curr ? 'bg-rose-50 text-rose-600' : ''
+                    }`}
+                  >
+                    {curr} ({curr === 'USD' ? '$' : curr === 'INR' ? '₹' : curr === 'JPY' ? '¥' : '€'})
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* LANGUAGE SELECTOR DROPDOWN */}
+          <div className="relative">
+            <button
+              onClick={() => {
+                setLangDropdownOpen(!langDropdownOpen);
+                setCurrencyDropdownOpen(false);
+              }}
+              className={`nav-link-underline inline-flex items-center gap-1 text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer hover:text-rose-500 ${navTextColorClass}`}
+            >
+              <Globe className="w-3.5 h-3.5 text-rose-500" />
+              <span>{activeLang}</span>
+              <ChevronDown className="w-3 h-3" />
+            </button>
+
+            {langDropdownOpen && (
+              <div className="absolute top-full right-0 mt-2 w-36 bg-white border border-slate-200 shadow-xl py-1 z-50 text-slate-900 text-xs font-mono">
+                <button
+                  onClick={() => {
+                    setActiveLang('EN');
+                    setLangDropdownOpen(false);
+                  }}
+                  className="w-full text-left px-3 py-2 font-bold hover:bg-rose-50 hover:text-rose-600 cursor-pointer"
+                >
+                  English (EN)
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveLang('JA');
+                    setLangDropdownOpen(false);
+                  }}
+                  className="w-full text-left px-3 py-2 font-bold hover:bg-rose-50 hover:text-rose-600 cursor-pointer"
+                >
+                  日本語 (JA)
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveLang('HI');
+                    setLangDropdownOpen(false);
+                  }}
+                  className="w-full text-left px-3 py-2 font-bold hover:bg-rose-50 hover:text-rose-600 cursor-pointer"
+                >
+                  हिन्दी (HI)
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Plan Expedition CTA Link (Border-Free Text with Hover Underline Animation) */}
+          <button
+            onClick={onOpenInquiry}
+            className={`nav-link-underline text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer hover:text-rose-500 ${navTextColorClass}`}
+          >
+            Plan Expedition ➔
+          </button>
+        </div>
+
+        {/* Mobile Hamburger Menu */}
+        <div className="lg:hidden flex items-center gap-2">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className={`p-2 ${logoColorClass}`}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-white text-[#0F172A] border-b border-slate-200 px-4 py-6 space-y-4 shadow-xl">
+          <div className="flex flex-col space-y-3 font-jakarta font-bold text-xs uppercase tracking-wider">
+            <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+            <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About</Link>
+            <Link to="/destinations" onClick={() => setMobileMenuOpen(false)}>Destinations</Link>
+            <Link to="/packages" onClick={() => setMobileMenuOpen(false)}>Tours</Link>
+            <Link to="/events/sakura-2027" onClick={() => setMobileMenuOpen(false)}>Events (Sakura 2027)</Link>
+            <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+          </div>
+
+          <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
+            <div className="flex gap-2">
+              {(['USD', 'INR', 'JPY', 'EUR'] as Currency[]).map((curr) => (
                 <button
                   key={curr}
-                  onClick={() => onCurrencyChange(curr)}
-                  className={`w-full text-left px-4 py-2 hover:bg-rose-50 font-medium transition-colors cursor-pointer ${
-                    currentCurrency === curr ? 'text-rose-600 font-bold bg-rose-50/50' : ''
+                  onClick={() => setCurrency(curr)}
+                  className={`px-2.5 py-1 text-xs font-mono font-bold border ${
+                    currency === curr ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 border-slate-300'
                   }`}
                 >
                   {curr}
                 </button>
               ))}
             </div>
-          </div>
-
-          {/* Plan Trip Pure Text Action (No Box, On-Hover Animated Underline) */}
-          <button
-            onClick={onOpenInquiry}
-            className={`relative py-1 flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase cursor-pointer transition-colors ${navTextColorClass} hover:text-rose-500 after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-rose-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left`}
-          >
-            <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-            <span>Plan Trip</span>
-          </button>
-        </div>
-
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`lg:hidden p-2 ${
-            isScrolled || !isHome ? 'text-slate-900' : 'text-white'
-          }`}
-          aria-label="Toggle Navigation"
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer Navigation */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden glass-dark-fluid text-white px-6 py-6 space-y-4 shadow-2xl animate-fadeIn">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                `block text-base font-medium py-2 px-3 transition-all ${
-                  isActive ? 'text-rose-400 font-bold' : 'hover:text-rose-300 text-slate-200'
-                }`
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-
-          <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
-            <div className="flex items-center justify-between text-xs text-slate-300">
-              <span>Currency</span>
-              <div className="flex gap-3">
-                {['USD ($)', 'EUR (€)', 'JPY (¥)'].map((curr) => (
-                  <button
-                    key={curr}
-                    onClick={() => onCurrencyChange(curr)}
-                    className={`text-xs ${
-                      currentCurrency === curr ? 'text-rose-400 font-bold underline' : 'text-slate-300'
-                    }`}
-                  >
-                    {curr.split(' ')[0]}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenInquiry();
               }}
-              className="w-full text-rose-400 hover:text-rose-300 py-2 text-center text-sm font-bold flex items-center justify-center gap-1.5"
+              className="px-4 py-2 bg-rose-600 text-white font-bold text-xs uppercase"
             >
-              <Sparkles className="w-4 h-4" />
-              <span>Plan Custom Trip</span>
+              Plan Expedition
             </button>
           </div>
         </div>

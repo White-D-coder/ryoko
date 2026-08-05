@@ -11,12 +11,14 @@ import { GuidePage } from './pages/GuidePage';
 import { ContactPage } from './pages/ContactPage';
 import { AboutPage } from './pages/AboutPage';
 import { PackageDetailPage } from './pages/PackageDetailPage';
+import { DestinationDetailPage } from './pages/DestinationDetailPage';
+import { EventsPage } from './pages/EventsPage';
 import { BookingModal } from './components/BookingModal';
 import { LeadMagnetModal } from './components/LeadMagnetModal';
 import { TOUR_PACKAGES, type TourPackage } from './data/japanData';
+import { CurrencyProvider } from './context/CurrencyContext';
 
 export function App() {
-  const [currency, setCurrency] = useState('USD ($)');
   const [selectedRegionFilter, setSelectedRegionFilter] = useState<string | undefined>(undefined);
 
   // Modals state accessible across all routes
@@ -28,44 +30,44 @@ export function App() {
   };
 
   return (
-    <BrowserRouter>
-      {/* Scroll restoration helper */}
-      <ScrollToTop />
+    <CurrencyProvider>
+      <BrowserRouter>
+        {/* Scroll restoration helper */}
+        <ScrollToTop />
 
-      <div className="min-h-screen bg-[#FAF9F5] text-[#0F172A] font-jakarta selection:bg-rose-500 selection:text-white flex flex-col justify-between">
-        {/* Navigation Bar */}
-        <Navbar
-          currentCurrency={currency}
-          onCurrencyChange={(curr) => setCurrency(curr)}
-          onOpenInquiry={handleOpenGeneralInquiry}
-        />
+        <div className="min-h-screen bg-[#FAF9F5] text-[#0F172A] font-jakarta selection:bg-rose-500 selection:text-white flex flex-col justify-between">
+          {/* Navigation Bar */}
+          <Navbar
+            onOpenInquiry={handleOpenGeneralInquiry}
+          />
 
-        {/* Page View Routes */}
-        <AppRoutes
-          selectedRegionFilter={selectedRegionFilter}
-          setSelectedRegionFilter={setSelectedRegionFilter}
-          setBookingPackage={setBookingPackage}
-          setIsLeadMagnetOpen={setIsLeadMagnetOpen}
-        />
+          {/* Page View Routes */}
+          <AppRoutes
+            selectedRegionFilter={selectedRegionFilter}
+            setSelectedRegionFilter={setSelectedRegionFilter}
+            setBookingPackage={setBookingPackage}
+            setIsLeadMagnetOpen={setIsLeadMagnetOpen}
+          />
 
-        {/* Footer */}
-        <Footer
-          onOpenLeadMagnet={() => setIsLeadMagnetOpen(true)}
-          onOpenInquiry={handleOpenGeneralInquiry}
-        />
+          {/* Footer */}
+          <Footer
+            onOpenLeadMagnet={() => setIsLeadMagnetOpen(true)}
+            onOpenInquiry={handleOpenGeneralInquiry}
+          />
 
-        {/* Global Booking & Lead Magnet Modals */}
-        <BookingModal
-          packageData={bookingPackage}
-          onClose={() => setBookingPackage(null)}
-        />
+          {/* Global Booking & Lead Magnet Modals */}
+          <BookingModal
+            packageData={bookingPackage}
+            onClose={() => setBookingPackage(null)}
+          />
 
-        <LeadMagnetModal
-          isOpen={isLeadMagnetOpen}
-          onClose={() => setIsLeadMagnetOpen(false)}
-        />
-      </div>
-    </BrowserRouter>
+          <LeadMagnetModal
+            isOpen={isLeadMagnetOpen}
+            onClose={() => setIsLeadMagnetOpen(false)}
+          />
+        </div>
+      </BrowserRouter>
+    </CurrencyProvider>
   );
 }
 
@@ -137,6 +139,14 @@ function AppRoutes({
         }
       />
       <Route
+        path="/events"
+        element={<EventsPage />}
+      />
+      <Route
+        path="/events/:eventId"
+        element={<EventsPage />}
+      />
+      <Route
         path="/guide"
         element={
           <GuidePage
@@ -151,6 +161,10 @@ function AppRoutes({
       <Route
         path="/about"
         element={<AboutPage />}
+      />
+      <Route
+        path="/destination/:destinationId"
+        element={<DestinationDetailPage onOpenBooking={(pkg) => setBookingPackage(pkg)} />}
       />
     </Routes>
   );

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { TOUR_PACKAGES, type TourPackage } from '../data/japanData';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, Train, Compass, Utensils } from 'lucide-react';
+import { useCurrency } from '../context/CurrencyContext';
 
 const DAY_KANJI = ['一日目', '二日目', '三日目', '四日目', '五日目', '六日目', '七日目', '八日目', '九日目', '十日目'];
 
@@ -12,21 +13,25 @@ interface PackageDetailPageProps {
 export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({ onOpenBooking }) => {
   const { packageId } = useParams<{ packageId: string }>();
   const navigate = useNavigate();
+  const { formatPrice } = useCurrency();
 
   const pkg: TourPackage = TOUR_PACKAGES.find((p) => p.id === packageId) || TOUR_PACKAGES[0];
 
-  const [activeTab, setActiveTab] = useState<'itinerary' | 'highlights' | 'route'>('itinerary');
+  const [activeTab, setActiveTab] = useState<'itinerary' | 'highlights' | 'route' | 'guide'>('itinerary');
   const [selectedMonth, setSelectedMonth] = useState('March 2027 (Sakura Mankai)');
   const [guestCount, setGuestCount] = useState(2);
   const [expandedDay, setExpandedDay] = useState<number | null>(1);
+  const [tourType, setTourType] = useState<'group' | 'private'>('group');
+
+  const calculatedUSD = tourType === 'group' ? Math.round(pkg.priceUSD * 0.8) : pkg.priceUSD;
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] pt-24 pb-24 text-slate-900">
+    <div className="min-h-screen bg-[#FAF9F5] pt-24 pb-24 text-slate-900 font-jakarta">
       {/* Top Back Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <button
           onClick={() => navigate('/packages')}
-          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-600 hover:text-rose-600 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Expeditions</span>
@@ -38,38 +43,28 @@ export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({ onOpenBook
         <img
           src={pkg.image}
           alt={pkg.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-90"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
-        <div className="absolute inset-0 flex items-center justify-center text-center">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-white space-y-4 relative z-10">
-            {/* City Stay Badge */}
-            <div className="inline-block px-3.5 py-1 bg-white/10 border border-white/20 text-slate-100 text-xs font-mono font-semibold uppercase tracking-widest backdrop-blur-md">
-              {pkg.citiesStay}
+        <div className="absolute bottom-10 left-0 right-0">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-rose-600 text-white text-[11px] font-mono font-bold uppercase tracking-widest">
+              <span>{pkg.durationDays} DAYS / {pkg.durationNights} NIGHTS</span>
             </div>
 
-            <h1 className="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            <h1 className="font-cinzel text-3xl sm:text-5xl font-bold text-white leading-tight max-w-4xl">
               {pkg.title}
             </h1>
 
-            <p className="font-jakarta text-slate-300 text-xs sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
-              {pkg.subtitle}
+            <p className="text-xs sm:text-sm text-slate-200 font-light italic max-w-2xl">
+              "{pkg.subtitle}"
             </p>
-
-            {/* Clean Spec Metrics Row (No Icon Clutter) */}
-            <div className="pt-2 flex items-center justify-center gap-6 text-xs font-mono text-slate-300 flex-wrap">
-              <span>{pkg.durationDays} Days / {pkg.durationNights} Nights</span>
-              <span>•</span>
-              <span>{pkg.groupSize}</span>
-              <span>•</span>
-              <span>★ {pkg.rating} ({pkg.reviewsCount} Reviews)</span>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Main Content Grid */}
+      {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Navigation Tabs */}
         <div className="flex items-center gap-8 border-b border-slate-200 mb-10 overflow-x-auto no-scrollbar">
@@ -101,7 +96,17 @@ export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({ onOpenBook
                 : 'border-transparent text-slate-400 hover:text-slate-700'
             }`}
           >
-            Bullet Train Transit
+            Experiences
+          </button>
+          <button
+            onClick={() => setActiveTab('guide')}
+            className={`py-3 text-xs font-extrabold uppercase tracking-widest cursor-pointer transition-colors border-b-2 ${
+              activeTab === 'guide'
+                ? 'border-slate-900 text-slate-900'
+                : 'border-transparent text-slate-400 hover:text-slate-700'
+            }`}
+          >
+            Guide & Culture
           </button>
         </div>
 
@@ -168,62 +173,127 @@ export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({ onOpenBook
               </div>
             )}
 
-            {/* TAB 2: Highlights & Inclusions */}
+            {/* TAB 2: Inclusions & Privileges */}
             {activeTab === 'highlights' && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-8 border border-slate-200 shadow-sm">
-                  <div className="space-y-4">
-                    <h3 className="font-cinzel text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">
-                      HIGHLIGHT EXPERIENCES
-                    </h3>
-                    <ul className="space-y-3">
-                      {pkg.highlights.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-xs text-slate-700 font-medium">
-                          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 mt-1.5" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="space-y-4 border-t md:border-t-0 md:border-l border-slate-200 pt-6 md:pt-0 md:pl-6">
-                    <h3 className="font-cinzel text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">
-                      INCLUDED PRIVILEGES
-                    </h3>
-                    <ul className="space-y-3">
-                      {pkg.inclusions.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-xs text-slate-700 font-medium">
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0 mt-1.5" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+              <div className="space-y-6 bg-white p-8 border border-slate-200 shadow-sm">
+                <div className="space-y-4">
+                  <h3 className="font-cinzel text-xl font-bold text-slate-900 border-b border-slate-100 pb-3">
+                    INCLUDED PRIVILEGES & SERVICES
+                  </h3>
+                  <p className="text-xs text-slate-500 font-jakarta">
+                    All premium inclusions covered in your expedition package price:
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    {pkg.inclusions.map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-3 text-xs text-slate-800 font-medium p-3 bg-slate-50 border border-slate-100">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             )}
 
-            {/* TAB 3: Bullet Train Route */}
+            {/* TAB 3: Experiences */}
             {activeTab === 'route' && (
+              <div className="space-y-6">
+                <div className="p-8 bg-white border border-slate-200 shadow-sm space-y-4">
+                  <div className="border-b border-slate-100 pb-3">
+                    <h3 className="font-cinzel text-xl font-bold text-slate-900">
+                      CURATED HIGHLIGHT EXPERIENCES
+                    </h3>
+                    <p className="text-xs text-slate-500 font-jakarta mt-1">
+                      Exclusive signature experiences included during your journey across Japan.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                    {pkg.highlights.map((item, idx) => (
+                      <div key={idx} className="flex items-center gap-3 p-3.5 bg-slate-50 border border-slate-200/60 text-xs font-semibold text-slate-900">
+                        <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-8 bg-white border border-slate-200 shadow-sm space-y-6">
+                  <div>
+                    <h3 className="font-cinzel text-xl font-bold text-slate-900">
+                      SHINKANSEN BULLET EXPRESS TRANSIT & CULTURAL JOURNEY
+                    </h3>
+                    <p className="text-xs text-slate-500 font-jakarta mt-1">
+                      First-class Green Car reserved seating with door-to-door luggage forwarding.
+                    </p>
+                  </div>
+
+                  <div className="p-6 bg-slate-900 text-white space-y-3 border border-slate-800">
+                    <div className="flex items-center justify-between text-xs font-mono text-rose-400">
+                      <span>TOKYO (SHINAGAWA)</span>
+                      <span>── 320 km/h ──</span>
+                      <span>KYOTO STATION</span>
+                    </div>
+                    <p className="text-xs text-slate-300 font-light leading-relaxed">
+                      Speeds up to 320 km/h with Mt. Fuji panoramas and complimentary Japanese bento dining onboard.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 4: Guide & Culture */}
+            {activeTab === 'guide' && (
               <div className="p-8 bg-white border border-slate-200 shadow-sm space-y-6">
-                <div>
+                <div className="border-b border-slate-100 pb-3">
                   <h3 className="font-cinzel text-xl font-bold text-slate-900">
-                    SHINKANSEN BULLET EXPRESS TRANSIT
+                    JAPANESE GUIDE & CULTURAL ETIQUETTE
                   </h3>
                   <p className="text-xs text-slate-500 font-jakarta mt-1">
-                    First-class Green Car reserved seating with door-to-door luggage forwarding.
+                    Essential cultural protocols and travel guidance for your journey in Japan.
                   </p>
                 </div>
 
-                <div className="p-6 bg-slate-900 text-white space-y-3 border border-slate-800">
-                  <div className="flex items-center justify-between text-xs font-mono text-rose-400">
-                    <span>TOKYO (SHINAGAWA)</span>
-                    <span>── 320 km/h ──</span>
-                    <span>KYOTO STATION</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+                  <div className="p-4 bg-slate-50 border border-slate-200 space-y-2">
+                    <div className="flex items-center gap-2 text-rose-600 font-bold text-xs uppercase font-mono">
+                      <Compass className="w-4 h-4 text-rose-600" />
+                      <span>Shrine & Temple Protocol</span>
+                    </div>
+                    <p className="text-xs text-slate-600 font-jakarta leading-relaxed">
+                      Bow slightly before passing under Torii gates. Wash hands at Temizuya water basins before bowing twice, clapping twice, and bowing once.
+                    </p>
                   </div>
-                  <p className="text-xs text-slate-300 font-light leading-relaxed">
-                    Speeds up to 320 km/h with Mt. Fuji panoramas and complimentary Japanese bento dining onboard.
-                  </p>
+
+                  <div className="p-4 bg-slate-50 border border-slate-200 space-y-2">
+                    <div className="flex items-center gap-2 text-rose-600 font-bold text-xs uppercase font-mono">
+                      <ShieldCheck className="w-4 h-4 text-rose-600" />
+                      <span>Ryokan & Onsen Rules</span>
+                    </div>
+                    <p className="text-xs text-slate-600 font-jakarta leading-relaxed">
+                      Wash and rinse thoroughly at sitting shower stations before stepping into hot spring waters. Wear provided Yukata robes to dinner.
+                    </p>
+                  </div>
+
+                  <div className="p-4 bg-slate-50 border border-slate-200 space-y-2">
+                    <div className="flex items-center gap-2 text-rose-600 font-bold text-xs uppercase font-mono">
+                      <Utensils className="w-4 h-4 text-rose-600" />
+                      <span>Tea Ceremony & Dining</span>
+                    </div>
+                    <p className="text-xs text-slate-600 font-jakarta leading-relaxed">
+                      Say "Itadakimasu" before eating. Never stick chopsticks vertically into rice bowls. Hold matcha bowls with both hands and rotate slightly.
+                    </p>
+                  </div>
+
+                  <div className="p-4 bg-slate-50 border border-slate-200 space-y-2">
+                    <div className="flex items-center gap-2 text-rose-600 font-bold text-xs uppercase font-mono">
+                      <Train className="w-4 h-4 text-rose-600" />
+                      <span>Shinkansen Courtesy</span>
+                    </div>
+                    <p className="text-xs text-slate-600 font-jakarta leading-relaxed">
+                      Keep voice levels soft on bullet trains. Set phones to silent manner mode. Recline seats gently after asking guests behind you.
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
@@ -237,9 +307,38 @@ export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({ onOpenBook
                   Expedition Pricing
                 </span>
                 <div className="text-3xl font-extrabold text-slate-900 font-cinzel">
-                  ${pkg.priceUSD.toLocaleString()}
+                  {formatPrice(calculatedUSD)}
                 </div>
-                <span className="text-xs text-slate-500 font-light">per guest (double occupancy)</span>
+                <span className="text-xs text-slate-500 font-light">per guest ({tourType} tour)</span>
+              </div>
+
+              {/* Group vs Private Tour Toggle */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-700 block">
+                  Select Tour Type:
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => setTourType('group')}
+                    className={`py-2 px-3 text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer border ${
+                      tourType === 'group'
+                        ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                        : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100'
+                    }`}
+                  >
+                    Group (-20%)
+                  </button>
+                  <button
+                    onClick={() => setTourType('private')}
+                    className={`py-2 px-3 text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer border ${
+                      tourType === 'private'
+                        ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                        : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100'
+                    }`}
+                  >
+                    Private Tour
+                  </button>
+                </div>
               </div>
 
               {/* Month Selector */}

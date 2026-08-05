@@ -238,11 +238,8 @@ export const TestimonialsMarquee: React.FC = () => {
     <section className="py-20 sm:py-24 bg-[#FAF9F5] relative overflow-hidden border-t border-slate-200/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          {/* Left Column (Pill Tag, Heading & Subtitle) */}
+          {/* Left Column (Heading & Subtitle) */}
           <div className="lg:col-span-4 space-y-4 pr-0 lg:pr-4">
-            <span className="inline-block px-3.5 py-1 bg-rose-50 text-rose-600 border border-rose-200 text-xs font-mono font-bold tracking-wider rounded-full">
-              / Testimonial • 感想
-            </span>
 
             <h2 className="font-cinzel text-3xl sm:text-4xl font-bold text-[#0F172A] tracking-tight leading-tight">
               WHAT OUR GUESTS ARE SAYING
