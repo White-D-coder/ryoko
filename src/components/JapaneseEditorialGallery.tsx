@@ -50,7 +50,7 @@ const GALLERY_CARDS: GalleryCard[] = [
 
 export const JapaneseEditorialGallery: React.FC = () => {
   return (
-    <section className="py-24 bg-[#FAF9F5] relative overflow-hidden border-t border-slate-200/50">
+    <section className="py-24 bg-[#FAF9F5] relative overflow-hidden border-slate-200/50">
       {/* Background Sumi-e Bamboo Ink Artwork */}
       <div className="absolute right-0 top-0 w-80 sm:w-96 md:w-[480px] h-full opacity-25 pointer-events-none select-none z-0">
         <img

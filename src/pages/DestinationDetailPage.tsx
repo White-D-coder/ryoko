@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { DESTINATION_GUIDES } from '../data/destinationsData';
 import { TOUR_PACKAGES, type TourPackage } from '../data/japanData';
 import { ArrowLeft, Train, CheckCircle2, ArrowRight, Snowflake, Mountain, Feather } from 'lucide-react';
+import { SakuraPlanner } from '../components/SakuraPlanner';
 
 interface DestinationDetailPageProps {
   onOpenBooking?: (pkg: TourPackage) => void;
@@ -60,12 +61,28 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
       </div>
 
       {/* =========================================================================
-          1. TOKYO PAGE DESIGN (HEADER + DORAEMON THEMED TRANSIT & GASTRONOMY)
+          1. TOKYO PAGE DESIGN (HEADER WITH DUAL LEFT/RIGHT WATERMARKS)
          ========================================================================= */}
       {guide.id === 'tokyo' && (
         <div className="space-y-20">
           <section className="relative py-10 washi-paper-bg overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            {/* LEFT SIDE Sakura Lantern Photograph Watermark */}
+            <div className="absolute left-0 top-0 w-80 h-96 opacity-15 pointer-events-none select-none overflow-hidden hidden md:block">
+              <img
+                src="/images/pexels-songhanphoto-10618962.jpg"
+                alt="Sakura Blossom Watermark"
+                className="w-full h-full object-cover filter mix-blend-multiply opacity-80"
+              />
+            </div>
+
+            {/* RIGHT SIDE Tokyo Calligraphy Watermark */}
+            <div className="absolute right-4 top-4 opacity-10 pointer-events-none select-none hidden lg:block">
+              <span className="japanese-calligraphy text-9xl font-black text-rose-950 writing-vertical">
+                桜・江戸・東京
+              </span>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-slate-200/80 pb-6">
                 <div className="space-y-3 max-w-2xl">
                   <span className="text-xs font-mono font-bold text-rose-600 uppercase tracking-widest block">
@@ -151,11 +168,27 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
             </div>
           </section>
 
-          {/* DORAEMON THEMED TRANSIT & GASTRONOMY SECTION FOR TOKYO (AS REQUESTED) */}
-          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          {/* DORAEMON THEMED TRANSIT & GASTRONOMY SECTION (DIRECT SECTION BACKGROUND WATERMARK, NO EXTRA OUTER DIV BOX) */}
+          <section className="relative py-16 overflow-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            {/* Direct Section Background Doraemon Pattern Watermark (EXACTLY LIKE HERO SECTION BG) */}
+            <div className="absolute inset-0 opacity-[0.08] pointer-events-none select-none mix-blend-multiply">
+              <img
+                src="/images/pexels-songhanphoto-10618962.jpg"
+                alt="Doraemon Pattern Watermark"
+                className="w-full h-full object-cover filter grayscale"
+              />
+            </div>
+
             {/* Doraemon Sky-Blue Anywhere Door Transit Container */}
             <div className="bg-sky-50 border-2 border-sky-300 p-8 sm:p-10 shadow-lg space-y-6 relative overflow-hidden">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-sky-200 pb-4">
+              {/* Doraemon Anywhere Door & Bell Calligraphy Watermark */}
+              <div className="absolute right-6 top-4 opacity-15 pointer-events-none select-none hidden sm:block">
+                <span className="japanese-calligraphy text-8xl font-black text-sky-800 writing-vertical">
+                  ドラえもん・どこでもドア
+                </span>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-sky-200 pb-4 relative z-10">
                 <div className="flex items-center gap-3">
                   {/* Doraemon Yellow Bell Badge Motif */}
                   <div className="w-9 h-9 rounded-full bg-yellow-400 border-2 border-slate-900 flex items-center justify-center text-slate-900 font-bold text-xs shadow-xs">
@@ -176,7 +209,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
                 </div>
               </div>
 
-              <div className="p-5 bg-white border border-sky-200 space-y-3">
+              <div className="p-5 bg-white border border-sky-200 space-y-3 relative z-10">
                 <div className="flex items-center justify-between text-xs font-mono font-bold text-sky-900 flex-wrap gap-4">
                   <span>TOKYO (SHINAGAWA)</span>
                   <span className="text-rose-600 font-black">── 320 KM/H NOZOMI SHINKANSEN ──</span>
@@ -190,7 +223,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
             </div>
 
             {/* Doraemon Dorayaki & Tokyo Gastronomy Highlights */}
-            <div className="space-y-8">
+            <div className="space-y-8 relative z-10">
               <div className="border-b border-sky-200 pb-4 flex items-center justify-between">
                 <div>
                   <span className="text-xs font-mono font-bold uppercase tracking-widest text-sky-700 block mb-1">
@@ -203,44 +236,80 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div className="space-y-3 bg-white p-6 border border-sky-200 shadow-sm hover:border-sky-400 transition-all">
-                  <div className="w-8 h-8 rounded-full bg-yellow-400 border border-slate-900 flex items-center justify-center text-slate-900 font-bold text-xs">
-                    01
+                <div className="bg-white border border-sky-200 shadow-sm hover:shadow-xl hover:border-sky-400 transition-all duration-300 group overflow-hidden flex flex-col justify-between">
+                  <div className="relative h-48 overflow-hidden bg-sky-50">
+                    <img
+                      src="/images/japanese-dorayaki.png"
+                      alt="Tokyo Dorayaki"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-yellow-400 border border-slate-900 flex items-center justify-center text-slate-900 font-bold text-xs shadow-md">
+                      01
+                    </div>
                   </div>
-                  <h3 className="font-cinzel text-lg font-bold text-slate-900">Tokyo Dorayaki (どら焼き)</h3>
-                  <p className="text-xs text-slate-600 font-light leading-relaxed">
-                    Doraemon's beloved fluffy pancake sandwiches filled with sweet Azuki red bean paste from Asakusa bakeries.
-                  </p>
+                  <div className="p-5 space-y-2 flex-1">
+                    <h3 className="font-cinzel text-base font-bold text-slate-900 group-hover:text-sky-700 transition-colors">Tokyo Dorayaki (どら焼き)</h3>
+                    <p className="text-xs text-slate-600 font-light leading-relaxed">
+                      Doraemon's beloved fluffy pancake sandwiches filled with sweet Azuki red bean paste from Asakusa bakeries.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="space-y-3 bg-white p-6 border border-sky-200 shadow-sm hover:border-sky-400 transition-all">
-                  <div className="w-8 h-8 rounded-full bg-sky-100 border border-sky-300 flex items-center justify-center text-sky-800 font-bold text-xs">
-                    02
+                <div className="bg-white border border-sky-200 shadow-sm hover:shadow-xl hover:border-sky-400 transition-all duration-300 group overflow-hidden flex flex-col justify-between">
+                  <div className="relative h-48 overflow-hidden bg-sky-50">
+                    <img
+                      src="/images/edomae-sushi.png"
+                      alt="Edomae Sushi"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-sky-100 border border-sky-300 flex items-center justify-center text-sky-800 font-bold text-xs shadow-md">
+                      02
+                    </div>
                   </div>
-                  <h3 className="font-cinzel text-lg font-bold text-slate-900">Edomae Sushi in Ginza</h3>
-                  <p className="text-xs text-slate-600 font-light leading-relaxed">
-                    Master chefs slicing wild bluefin tuna and seasonal fish served on warm vinegared rice.
-                  </p>
+                  <div className="p-5 space-y-2 flex-1">
+                    <h3 className="font-cinzel text-base font-bold text-slate-900 group-hover:text-sky-700 transition-colors">Edomae Sushi in Ginza</h3>
+                    <p className="text-xs text-slate-600 font-light leading-relaxed">
+                      Master chefs slicing wild bluefin tuna and seasonal fish served on warm vinegared rice.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="space-y-3 bg-white p-6 border border-sky-200 shadow-sm hover:border-sky-400 transition-all">
-                  <div className="w-8 h-8 rounded-full bg-sky-100 border border-sky-300 flex items-center justify-center text-sky-800 font-bold text-xs">
-                    03
+                <div className="bg-white border border-sky-200 shadow-sm hover:shadow-xl hover:border-sky-400 transition-all duration-300 group overflow-hidden flex flex-col justify-between">
+                  <div className="relative h-48 overflow-hidden bg-sky-50">
+                    <img
+                      src="/images/omoide-yakitori.png"
+                      alt="Omoide Yokocho Yakitori"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-sky-100 border border-sky-300 flex items-center justify-center text-sky-800 font-bold text-xs shadow-md">
+                      03
+                    </div>
                   </div>
-                  <h3 className="font-cinzel text-lg font-bold text-slate-900">Omoide Yokocho Yakitori</h3>
-                  <p className="text-xs text-slate-600 font-light leading-relaxed">
-                    Smoky charcoal-grilled chicken skewers paired with local craft sake in Shinjuku alleys.
-                  </p>
+                  <div className="p-5 space-y-2 flex-1">
+                    <h3 className="font-cinzel text-base font-bold text-slate-900 group-hover:text-sky-700 transition-colors">Omoide Yokocho Yakitori</h3>
+                    <p className="text-xs text-slate-600 font-light leading-relaxed">
+                      Smoky charcoal-grilled chicken skewers paired with local craft sake in Shinjuku alleys.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="space-y-3 bg-white p-6 border border-sky-200 shadow-sm hover:border-sky-400 transition-all">
-                  <div className="w-8 h-8 rounded-full bg-sky-100 border border-sky-300 flex items-center justify-center text-sky-800 font-bold text-xs">
-                    04
+                <div className="bg-white border border-sky-200 shadow-sm hover:shadow-xl hover:border-sky-400 transition-all duration-300 group overflow-hidden flex flex-col justify-between">
+                  <div className="relative h-48 overflow-hidden bg-sky-50">
+                    <img
+                      src="/images/japanese-ramen.png"
+                      alt="Rich Tonkotsu & Shoyu Ramen"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-sky-100 border border-sky-300 flex items-center justify-center text-sky-800 font-bold text-xs shadow-md">
+                      04
+                    </div>
                   </div>
-                  <h3 className="font-cinzel text-lg font-bold text-slate-900">Rich Tonkotsu & Shoyu Ramen</h3>
-                  <p className="text-xs text-slate-600 font-light leading-relaxed">
-                    Slurping rich bone broth bowls in Golden Gai broth dispensaries.
-                  </p>
+                  <div className="p-5 space-y-2 flex-1">
+                    <h3 className="font-cinzel text-base font-bold text-slate-900 group-hover:text-sky-700 transition-colors">Rich Tonkotsu & Shoyu Ramen</h3>
+                    <p className="text-xs text-slate-600 font-light leading-relaxed">
+                      Slurping rich bone broth bowls in Golden Gai broth dispensaries.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -257,7 +326,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
             {/* Background Samurai Katana & Bamboo Watermark */}
             <div className="absolute right-6 top-8 opacity-10 pointer-events-none select-none hidden lg:block">
               <span className="japanese-calligraphy text-9xl font-black text-amber-950 writing-vertical">
-                武士道・侍
+                武士道・侍・竹林
               </span>
             </div>
 
@@ -332,11 +401,27 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
       )}
 
       {/* =========================================================================
-          3. KYOTO PAGE DESIGN (ZEN BAMBOO SANCTUARY LAYOUT)
+          3. KYOTO PAGE DESIGN (ZEN BAMBOO SANCTUARY LAYOUT WITH DUAL WATERMARKS)
          ========================================================================= */}
       {guide.id === 'kyoto' && (
         <div className="space-y-20">
           <section className="relative py-10 washi-paper-bg overflow-hidden">
+            {/* LEFT SIDE Bamboo Grove Photograph Watermark */}
+            <div className="absolute left-0 top-0 w-80 h-96 opacity-15 pointer-events-none select-none overflow-hidden hidden md:block">
+              <img
+                src="/images/pexels-agustin-villalba-589020055-17258243.jpg"
+                alt="Bamboo Grove Watermark"
+                className="w-full h-full object-cover filter mix-blend-multiply opacity-80"
+              />
+            </div>
+
+            {/* RIGHT SIDE Kyoto Calligraphy Watermark */}
+            <div className="absolute right-4 top-4 opacity-10 pointer-events-none select-none hidden lg:block">
+              <span className="japanese-calligraphy text-9xl font-black text-rose-950 writing-vertical">
+                竹林・古都・京都
+              </span>
+            </div>
+
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10">
               <div className="text-center max-w-3xl mx-auto space-y-3">
                 <h1 className="editorial-title text-slate-900">
@@ -421,48 +506,6 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
       )}
 
       {/* =========================================================================
-          5. OSAKA PAGE DESIGN (KUIDAORE STREET FOOD FEATURE LAYOUT)
-         ========================================================================= */}
-      {guide.id === 'osaka' && (
-        <div className="space-y-24">
-          <section className="relative py-10 washi-paper-bg overflow-hidden">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white p-8 sm:p-12 border border-amber-200 shadow-xl relative">
-                <div className="lg:col-span-7 space-y-6">
-                  <h1 className="font-cinzel text-4xl sm:text-5xl font-bold text-slate-900">
-                    LET'S EAT DELICIOUSLY IN OSAKA
-                  </h1>
-                </div>
-
-                <div className="lg:col-span-5 flex flex-col items-center justify-center text-center p-6 border-l border-amber-100">
-                  <span className="japanese-calligraphy text-9xl font-black text-slate-900 opacity-90">
-                    食
-                  </span>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      )}
-
-      {/* =========================================================================
-          6. HIROSHIMA PAGE DESIGN (OCEAN TORII & INLAND SEA SANCTUARY)
-         ========================================================================= */}
-      {guide.id === 'hiroshima' && (
-        <div className="space-y-24">
-          <section className="relative py-10 washi-paper-bg overflow-hidden">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-              <div className="text-center max-w-3xl mx-auto space-y-4">
-                <h1 className="editorial-title text-slate-900">
-                  {guide.name} <span className="japanese-calligraphy font-normal text-3xl sm:text-5xl text-rose-600 ml-2">{guide.kanji}</span>
-                </h1>
-              </div>
-            </div>
-          </section>
-        </div>
-      )}
-
-      {/* =========================================================================
           COMMON LOWER SECTION (TRANSIT TIMELINE, GASTRONOMY, EXPEDITIONS)
          ========================================================================= */}
 
@@ -511,18 +554,37 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {guide.culinary.map((food, idx) => (
-                <div key={idx} className="space-y-3 group cursor-pointer">
-                  <span className="text-xs font-mono font-bold text-rose-600 block uppercase tracking-widest">
-                    GASTRONOMY 0{idx + 1}
-                  </span>
-                  <h3 className="font-cinzel text-lg font-bold text-slate-900 group-hover:text-rose-600 transition-colors">
-                    {food.title}
-                  </h3>
-                  <p className="text-xs text-slate-600 font-light leading-relaxed">
-                    {food.description}
-                  </p>
+                <div
+                  key={idx}
+                  className="bg-white border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden flex flex-col justify-between"
+                >
+                  {food.image && (
+                    <div className="relative h-48 overflow-hidden bg-slate-100">
+                      <img
+                        src={food.image}
+                        alt={food.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-3 left-3 px-2 py-0.5 bg-slate-900/80 backdrop-blur-xs text-[10px] font-mono font-bold text-white uppercase tracking-widest">
+                        GASTRONOMY 0{idx + 1}
+                      </div>
+                    </div>
+                  )}
+                  <div className="p-5 space-y-2 flex-1">
+                    {!food.image && (
+                      <span className="text-[10px] font-mono font-bold text-rose-600 block uppercase tracking-widest">
+                        GASTRONOMY 0{idx + 1}
+                      </span>
+                    )}
+                    <h3 className="font-cinzel text-base font-bold text-slate-900 group-hover:text-rose-600 transition-colors">
+                      {food.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 font-light leading-relaxed">
+                      {food.description}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -606,6 +668,16 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ on
             ))}
           </div>
         </section>
+      </div>
+
+      {/* SAKURA BLOOM PLANNER 2027 COMPONENT */}
+      <div className="mt-20">
+        <SakuraPlanner
+          onSelectPackage={(pkg) => {
+            if (onOpenBooking) onOpenBooking(pkg);
+            else navigate(`/package/${pkg.id}`);
+          }}
+        />
       </div>
     </div>
   );

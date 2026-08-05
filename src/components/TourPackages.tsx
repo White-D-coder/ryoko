@@ -72,7 +72,7 @@ export const TourPackages: React.FC<TourPackagesProps> = ({
   }, [activeRegionFilter, activeCategory]);
 
   return (
-    <section id="packages-section" className="py-10 bg-[#FAF9F5] relative overflow-hidden border-t border-slate-200/50">
+    <section id="packages-section" className="py-10 bg-[#FAF9F5] relative overflow-hidden border-t border-slate-200/50 font-jakarta">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-6">
@@ -126,9 +126,11 @@ export const TourPackages: React.FC<TourPackagesProps> = ({
         {isDetailedView ? (
           /* REGIONAL GUIDE OVERVIEW STYLE DETAILED TOUR CARD LIST LAYOUT */
           <div className="space-y-8">
-            {displayedPackages.map((pkg) => {
+            {displayedPackages.map((pkg, idx) => {
               const currentTourType = getTourType(pkg.id);
               const priceUSD = getCalculatedPrice(pkg);
+              const showFlightBadge = idx % 2 === 0;
+
               return (
                 <div
                   key={pkg.id}
@@ -145,15 +147,17 @@ export const TourPackages: React.FC<TourPackagesProps> = ({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
 
-                    {/* Top-Right Flight Not Included Badge */}
-                    <div className="relative z-10 self-end">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-950/85 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono font-bold rounded-none shadow-md">
-                        <FlightCrossIcon className="w-3.5 h-3.5 text-slate-300" />
-                        Flight Not Included
-                      </span>
+                    {/* Top-Right Flight Not Included Badge (Rendered Selective) */}
+                    <div className="relative z-10 self-end min-h-[28px]">
+                      {showFlightBadge && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-950/85 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono font-bold rounded-none shadow-md">
+                          <FlightCrossIcon className="w-3.5 h-3.5 text-slate-300" />
+                          Flight Not Included
+                        </span>
+                      )}
                     </div>
 
-                    {/* Bottom Left Glowing Location Breakdown (NO SOLID BOX OVERLAY) */}
+                    {/* Bottom Left Glowing Location Breakdown */}
                     <div className="relative z-10 space-y-2">
                       <div className="flex items-center gap-1.5 text-xs text-rose-300 font-bold uppercase tracking-widest font-mono drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                         <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
@@ -268,11 +272,12 @@ export const TourPackages: React.FC<TourPackagesProps> = ({
             })}
           </div>
         ) : (
-          /* STANDARD 3-COLUMN FULL PHOTOGRAPHY CARDS (HOMEPAGE & TOURS GRID) */
+          /* STANDARD 3-COLUMN FULL PHOTOGRAPHY CARDS */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayedPackages.map((pkg) => {
+            {displayedPackages.map((pkg, idx) => {
               const currentTourType = getTourType(pkg.id);
               const priceUSD = getCalculatedPrice(pkg);
+              const showFlightBadge = idx % 2 === 0;
 
               return (
                 <div
@@ -290,16 +295,18 @@ export const TourPackages: React.FC<TourPackagesProps> = ({
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
 
                   {/* Top Bar: Flight Not Included */}
-                  <div className="relative z-10 p-5 flex items-start justify-end">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-950/85 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono font-bold rounded-none shadow-md">
-                      <FlightCrossIcon className="w-3.5 h-3.5 text-slate-300" />
-                      Flight Not Included
-                    </span>
+                  <div className="relative z-10 p-5 flex items-start justify-end min-h-[44px]">
+                    {showFlightBadge && (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-950/85 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono font-bold rounded-none shadow-md">
+                        <FlightCrossIcon className="w-3.5 h-3.5 text-slate-300" />
+                        Flight Not Included
+                      </span>
+                    )}
                   </div>
 
                   {/* Bottom Content & Interactive Group/Private Selector */}
                   <div className="relative z-10 p-6 text-white space-y-3">
-                    {/* Glowing Location Breakdown (NO SOLID BOX) */}
+                    {/* Glowing Location Breakdown */}
                     <div className="flex items-center gap-1.5 text-xs text-rose-300 font-bold uppercase tracking-widest font-mono drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                       <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
                       <span>{pkg.citiesStay}</span>

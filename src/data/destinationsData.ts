@@ -78,18 +78,22 @@ export const DESTINATION_GUIDES: Record<string, DestinationGuide> = {
       {
         title: 'Edomae Sushi in Ginza',
         description: 'Master chefs slicing wild bluefin tuna and seasonal fish served on warm vinegared rice.',
+        image: '/images/edomae-sushi.png',
       },
       {
         title: 'Omoide Yokocho Yakitori',
         description: 'Smoky charcoal-grilled chicken skewers paired with local craft sake in Shinjuku alleys.',
+        image: '/images/omoide-yakitori.png',
       },
       {
         title: 'Rich Tonkotsu & Shoyu Ramen',
         description: 'Slurping rich bone broth bowls in Golden Gai broth dispensaries.',
+        image: '/images/japanese-ramen.png',
       },
       {
         title: 'Harajuku Matcha Parfaits',
         description: 'Artisanal stone-ground green tea soft serve with red bean paste & mochi.',
+        image: '/images/matcha-tea-ceremony.png',
       },
     ],
     travelTips: [
@@ -151,18 +155,22 @@ export const DESTINATION_GUIDES: Record<string, DestinationGuide> = {
       {
         title: 'Multi-course Kaiseki Dining',
         description: 'Traditional multi-course dinner reflecting micro-seasons with Michelin-starred precision.',
+        image: '/images/pexels-satoshi-1325837.jpg',
       },
       {
         title: 'Stone-Ground Uji Matcha',
         description: 'Whisked ceremonial matcha served with seasonal wagashi sweets.',
+        image: '/images/matcha-tea-ceremony.png',
       },
       {
         title: 'Yudofu Simmered Tofu',
         description: 'Silken Kyoto tofu simmered in kombu dashi at Nanzen-ji temple gardens.',
+        image: '/images/pexels-leeloothefirst-5236398.jpg',
       },
       {
         title: 'Nishiki Market Seafood',
         description: 'Fresh grilled scallops, skewered eel, and Kyoto tsukemono pickles.',
+        image: '/images/edomae-sushi.png',
       },
     ],
     travelTips: [
@@ -218,18 +226,22 @@ export const DESTINATION_GUIDES: Record<string, DestinationGuide> = {
       {
         title: 'Volcanic Black Eggs (Kuro-Tamago)',
         description: 'Eggs boiled in Owakudani sulfur hot springs, believed to add 7 years to your life.',
+        image: '/images/pexels-drkesu-12045314.jpg',
       },
       {
         title: 'Hoto Miso Noodles',
         description: 'Thick flat wheat noodles simmered with fresh pumpkin, mushrooms, and rich broth.',
+        image: '/images/japanese-ramen.png',
       },
       {
         title: 'Ryokan Kaiseki Feasts',
         description: 'Seasonal local mountain vegetables, Wagyu beef, and fresh Lake Ashi trout.',
+        image: '/images/pexels-satoshi-1325837.jpg',
       },
       {
         title: 'Hakone Mountain Tofu',
         description: 'Silken tofu crafted using pure volcanic spring mineral water.',
+        image: '/images/pexels-leeloothefirst-5236398.jpg',
       },
     ],
     travelTips: [
@@ -285,18 +297,22 @@ export const DESTINATION_GUIDES: Record<string, DestinationGuide> = {
       {
         title: 'Piping Hot Takoyaki',
         description: 'Crispy batter balls stuffed with octopus, topped with bonito flakes and sweet savory sauce.',
+        image: '/images/japanese-dorayaki.png',
       },
       {
         title: 'Sizzling Okonomiyaki',
         description: 'Osaka-style savory cabbage pancake grilled right at your table with pork and mayo.',
+        image: '/images/japanese-ramen.png',
       },
       {
         title: 'Shinsekai Kushikatsu Skewers',
         description: 'Deep-fried meat and vegetable skewers dipped into sweet Worcestershire sauce.',
+        image: '/images/omoide-yakitori.png',
       },
       {
         title: 'Kuromon Market Wagyu Beef',
         description: 'Melt-in-your-mouth grilled A5 Wagyu beef and sea urchin skewers.',
+        image: '/images/edomae-sushi.png',
       },
     ],
     travelTips: [
@@ -352,18 +368,22 @@ export const DESTINATION_GUIDES: Record<string, DestinationGuide> = {
       {
         title: 'Fresh Hokkaido King Crab & Uni Don',
         description: 'Sweet sea urchin and fresh king crab legs served over warm sushi rice.',
+        image: '/images/edomae-sushi.png',
       },
       {
         title: 'Sapporo Miso Butter Ramen',
         description: 'Rich miso broth topped with sweet corn, thick chashu pork, and a pat of fresh Hokkaido butter.',
+        image: '/images/japanese-ramen.png',
       },
       {
         title: 'Genghis Khan Grilled Mutton',
         description: 'Tender mutton cooked over helmet-shaped iron grills with onions and bean sprouts.',
+        image: '/images/omoide-yakitori.png',
       },
       {
         title: 'Fresh Farm Soft Serve Ice Cream',
         description: 'Rich, creamy soft serve ice cream made from pure Hokkaido dairy milk.',
+        image: '/images/matcha-tea-ceremony.png',
       },
     ],
     travelTips: [
@@ -419,18 +439,22 @@ export const DESTINATION_GUIDES: Record<string, DestinationGuide> = {
       {
         title: 'Hiroshima-Style Layered Okonomiyaki',
         description: 'Layered crepe pancake packed with cabbage, yakisoba noodles, fried egg, and savory sauce.',
+        image: '/images/japanese-ramen.png',
       },
       {
         title: 'Grilled Seto Inland Sea Oysters',
         description: 'Plump local oysters grilled over charcoal with lemon and ponzu soy sauce.',
+        image: '/images/edomae-sushi.png',
       },
       {
         title: 'Momiji Manju Pastries',
         description: 'Maple-leaf-shaped sweet cakes filled with red bean paste, matcha cream, or chocolate.',
+        image: '/images/japanese-dorayaki.png',
       },
       {
         title: 'Hiroshima Lemon Crafts',
         description: 'Refreshing lemon sweets, craft beers, and lemon-infused seasoning salts.',
+        image: '/images/matcha-tea-ceremony.png',
       },
     ],
     travelTips: [

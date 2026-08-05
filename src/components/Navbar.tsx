@@ -42,20 +42,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
   const navTextColorClass = isScrolled || !isHome ? 'text-slate-800' : 'text-slate-100';
 
   const eventItems = [
-    { path: '/events/sakura-2027', label: 'Sakura 2027' },
-    { path: '/events/momiji-autumn', label: 'Momiji Autumn' },
-    { path: '/events/gion-matsuri', label: 'Gion Matsuri' },
-    { path: '/events/sapporo-snow', label: 'Sapporo Snow Festival' },
-    { path: '/events/sumida-fireworks', label: 'Sumidagawa Fireworks' },
+    { path: '/events/sakura-2027', label: 'Sakura 2027', active: true },
+    { path: '#', label: 'Momiji Autumn (Coming Soon)', active: false },
+    { path: '#', label: 'Gion Matsuri (Coming Soon)', active: false },
+    { path: '#', label: 'Sapporo Snow Festival (Coming Soon)', active: false },
+    { path: '#', label: 'Sumidagawa Fireworks (Coming Soon)', active: false },
   ];
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerBgClass}`}>
-      {/* Styles for Expanding Hover Underline Animation */}
+      {/* Styles for Signature Underline Hover Animation */}
       <style>{`
         .nav-link-underline {
           position: relative;
           padding-bottom: 4px;
+          display: inline-flex;
+          align-items: center;
         }
         .nav-link-underline::after {
           content: '';
@@ -75,15 +77,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group">
+        <Link to="/" className="flex items-center gap-2.5 group shrink-0">
           <SakuraIcon size={26} className="group-hover:rotate-45 transition-transform duration-500" />
           <span className={`font-outfit text-lg font-black tracking-widest uppercase ${logoColorClass}`}>
             RYOKŌ <span className="text-xs font-normal tracking-normal opacity-70 font-kanji ml-1">旅行</span>
           </span>
         </Link>
 
-        {/* Desktop Navigation Links with Signature Underline Hover Animation */}
-        <nav className="hidden lg:flex items-center gap-7">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-7">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -128,13 +130,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             Tours
           </NavLink>
 
-          {/* EVENTS DROPDOWN */}
+          {/* EVENTS DROPDOWN (ONLY SAKURA 2027 IS ACTIVE) */}
           <div
-            className="relative"
+            className="relative flex items-center py-2"
             onMouseEnter={() => setEventsDropdownOpen(true)}
             onMouseLeave={() => setEventsDropdownOpen(false)}
           >
             <button
+              onClick={() => setEventsDropdownOpen(!eventsDropdownOpen)}
               className={`nav-link-underline inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer hover:text-rose-500 ${navTextColorClass}`}
             >
               <span>Events</span>
@@ -142,17 +145,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             </button>
 
             {eventsDropdownOpen && (
-              <div className="absolute top-full left-0 w-56 bg-white border border-slate-200 shadow-xl py-2 z-50">
-                {eventItems.map((evt) => (
-                  <Link
-                    key={evt.path}
-                    to={evt.path}
-                    onClick={() => setEventsDropdownOpen(false)}
-                    className="block px-4 py-2 text-xs font-bold text-slate-800 hover:bg-rose-50 hover:text-rose-600 transition-colors"
-                  >
-                    {evt.label}
-                  </Link>
-                ))}
+              <div className="absolute top-full left-0 w-64 bg-white border border-slate-200 shadow-2xl py-2 z-50 rounded-none">
+                {eventItems.map((evt) =>
+                  evt.active ? (
+                    <Link
+                      key={evt.label}
+                      to={evt.path}
+                      onClick={() => setEventsDropdownOpen(false)}
+                      className="block px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors"
+                    >
+                      {evt.label}
+                    </Link>
+                  ) : (
+                    <div
+                      key={evt.label}
+                      className="block px-4 py-2.5 text-xs font-bold text-slate-400 cursor-default bg-slate-50/50"
+                    >
+                      {evt.label}
+                    </div>
+                  )
+                )}
               </div>
             )}
           </div>
@@ -167,16 +179,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
           >
             Contact
           </NavLink>
-        </nav>
 
-        {/* Right Utility Navigation Links (NO SOLID BOXES, ONLY HOVER UNDERLINE ANIMATION) */}
-        <div className="hidden lg:flex items-center gap-6">
           {/* CURRENCY SELECTOR DROPDOWN */}
-          <div className="relative">
+          <div className="relative flex items-center py-2">
             <button
               onClick={() => {
                 setCurrencyDropdownOpen(!currencyDropdownOpen);
                 setLangDropdownOpen(false);
+                setEventsDropdownOpen(false);
               }}
               className={`nav-link-underline inline-flex items-center gap-1 text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer hover:text-rose-500 ${navTextColorClass}`}
             >
@@ -186,7 +196,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             </button>
 
             {currencyDropdownOpen && (
-              <div className="absolute top-full right-0 mt-2 w-36 bg-white border border-slate-200 shadow-xl py-1 z-50 text-slate-900 text-xs font-mono">
+              <div className="absolute top-full right-0 w-36 bg-white border border-slate-200 shadow-xl py-1 z-50 text-slate-900 text-xs font-mono">
                 {(['USD', 'INR', 'JPY', 'EUR'] as Currency[]).map((curr) => (
                   <button
                     key={curr}
@@ -206,11 +216,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
           </div>
 
           {/* LANGUAGE SELECTOR DROPDOWN */}
-          <div className="relative">
+          <div className="relative flex items-center py-2">
             <button
               onClick={() => {
                 setLangDropdownOpen(!langDropdownOpen);
                 setCurrencyDropdownOpen(false);
+                setEventsDropdownOpen(false);
               }}
               className={`nav-link-underline inline-flex items-center gap-1 text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer hover:text-rose-500 ${navTextColorClass}`}
             >
@@ -220,7 +231,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             </button>
 
             {langDropdownOpen && (
-              <div className="absolute top-full right-0 mt-2 w-36 bg-white border border-slate-200 shadow-xl py-1 z-50 text-slate-900 text-xs font-mono">
+              <div className="absolute top-full right-0 w-36 bg-white border border-slate-200 shadow-xl py-1 z-50 text-slate-900 text-xs font-mono">
                 <button
                   onClick={() => {
                     setActiveLang('EN');
@@ -252,14 +263,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             )}
           </div>
 
-          {/* Plan Expedition CTA Link (Border-Free Text with Hover Underline Animation) */}
+          {/* Plan Expedition CTA Link */}
           <button
             onClick={onOpenInquiry}
             className={`nav-link-underline text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer hover:text-rose-500 ${navTextColorClass}`}
           >
             Plan Expedition ➔
           </button>
-        </div>
+        </nav>
 
         {/* Mobile Hamburger Menu */}
         <div className="lg:hidden flex items-center gap-2">

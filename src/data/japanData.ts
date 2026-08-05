@@ -61,28 +61,6 @@ export interface SakuraBloomForecast {
 
 export const REGIONS: RegionData[] = [
   {
-    id: 'hokkaido',
-    name: 'Hokkaido',
-    kanji: '北海道',
-    english: 'Northern Wilderness & Snow',
-    tagline: 'Powder snow, volcano hot springs & lavender fields',
-    highlights: ['Sapporo Ramen Alley', 'Otaru Canal', 'Noboribetsu Onsen', 'Furano Lavender Fields'],
-    packageCount: 6,
-    heroImage: '/images/pexels-kuma-jio-2150949207-31416355.jpg',
-    color: '#3B82F6'
-  },
-  {
-    id: 'tohoku',
-    name: 'Tohoku',
-    kanji: '東北',
-    english: 'Ancient Traditions & Nature',
-    tagline: 'Unspoiled mountains, samurai castles & Nebuta festivals',
-    highlights: ['Hirosaki Castle Sakura', 'Ginzan Onsen', 'Matsushima Bay', 'Aomori Nebuta'],
-    packageCount: 5,
-    heroImage: '/images/pexels-satoshi-1325837.jpg',
-    color: '#10B981'
-  },
-  {
     id: 'kanto',
     name: 'Kanto',
     kanji: '関東',
@@ -103,6 +81,28 @@ export const REGIONS: RegionData[] = [
     packageCount: 18,
     heroImage: '/images/pexels-huy-phan-316220-34991523.jpg',
     color: '#F59E0B'
+  },
+  {
+    id: 'hokkaido',
+    name: 'Hokkaido',
+    kanji: '北海道',
+    english: 'Northern Wilderness & Snow',
+    tagline: 'Powder snow, volcano hot springs & lavender fields',
+    highlights: ['Sapporo Ramen Alley', 'Otaru Canal', 'Noboribetsu Onsen', 'Furano Lavender Fields'],
+    packageCount: 6,
+    heroImage: '/images/pexels-kuma-jio-2150949207-31416355.jpg',
+    color: '#3B82F6'
+  },
+  {
+    id: 'tohoku',
+    name: 'Tohoku',
+    kanji: '東北',
+    english: 'Ancient Traditions & Nature',
+    tagline: 'Unspoiled mountains, samurai castles & Nebuta festivals',
+    highlights: ['Hirosaki Castle Sakura', 'Ginzan Onsen', 'Matsushima Bay', 'Aomori Nebuta'],
+    packageCount: 5,
+    heroImage: '/images/pexels-satoshi-1325837.jpg',
+    color: '#10B981'
   },
   {
     id: 'chugoku_shikoku',
@@ -138,303 +138,294 @@ export const SHINKANSEN_ROUTES: ShinkansenRoute[] = [
 
 export const SAKURA_FORECASTS: SakuraBloomForecast[] = [
   {
-    region: 'Kyushu (Fukuoka)',
-    city: 'Fukuoka',
-    firstBloom: 'March 21',
-    fullBloom: 'March 29',
-    status: 'Upcoming',
-    tempAvg: '17°C / 62°F',
-    image: '/images/pexels-willianjusten-15830265.jpg'
-  },
-  {
-    region: 'Kansai (Kyoto & Osaka)',
-    city: 'Kyoto / Osaka',
-    firstBloom: 'March 24',
-    fullBloom: 'April 01',
-    status: 'Peak Season',
-    tempAvg: '16°C / 60°F',
-    image: '/images/pexels-huy-phan-316220-34991523.jpg'
-  },
-  {
-    region: 'Kanto (Tokyo & Fuji)',
+    region: 'Kanto',
     city: 'Tokyo',
-    firstBloom: 'March 23',
+    firstBloom: 'March 22',
+    fullBloom: 'March 29',
+    status: 'Peak Season',
+    tempAvg: '15°C',
+    image: '/images/pexels-sarmat-batagov-776392502-35139475.jpg'
+  },
+  {
+    region: 'Kansai',
+    city: 'Kyoto',
+    firstBloom: 'March 24',
     fullBloom: 'March 31',
     status: 'Peak Season',
-    tempAvg: '18°C / 64°F',
+    tempAvg: '14°C',
+    image: '/images/pexels-songhanphoto-10618962.jpg'
+  },
+  {
+    region: 'Chubu',
+    city: 'Mt. Fuji & Hakone',
+    firstBloom: 'March 28',
+    fullBloom: 'April 04',
+    status: 'Upcoming',
+    tempAvg: '12°C',
     image: '/images/pexels-agustin-villalba-589020055-17258243.jpg'
   },
   {
-    region: 'Tohoku (Sendai & Aomori)',
-    city: 'Hirosaki',
-    firstBloom: 'April 14',
-    fullBloom: 'April 20',
-    status: 'Upcoming',
-    tempAvg: '13°C / 55°F',
+    region: 'Kansai',
+    city: 'Osaka',
+    firstBloom: 'March 25',
+    fullBloom: 'April 01',
+    status: 'Peak Season',
+    tempAvg: '15°C',
     image: '/images/pexels-satoshi-1325837.jpg'
   },
   {
-    region: 'Hokkaido (Sapporo)',
+    region: 'Hokkaido',
     city: 'Sapporo',
     firstBloom: 'April 26',
-    fullBloom: 'May 02',
-    status: 'Late Bloom',
-    tempAvg: '11°C / 52°F',
+    fullBloom: 'May 01',
+    status: 'Upcoming',
+    tempAvg: '9°C',
     image: '/images/pexels-kuma-jio-2150949207-31416355.jpg'
   }
 ];
 
 export const TOUR_PACKAGES: TourPackage[] = [
   {
-    id: 'sakura-golden-route-2027',
+    id: 'tokyo-golden-route',
     title: 'The Eternal Sakura Golden Route',
-    subtitle: 'Classic Tokyo, Mt. Fuji & Kyoto immersed in peak cherry blossom season',
+    subtitle: 'Tokyo, Mt. Fuji, Kyoto & Osaka Imperial Heritage Journey',
     category: 'sakura',
-    regionId: 'kansai',
-    citiesStay: 'Tokyo 3N, Kyoto 4N, Osaka 2N',
-    citiesCount: 3,
-    hotelsCount: 3,
+    regionId: 'kanto',
+    citiesStay: 'Tokyo 3N, Mt. Fuji 2N, Kyoto 3N, Osaka 2N',
+    citiesCount: 4,
+    hotelsCount: 4,
     transfersCount: 5,
-    activitiesCount: 14,
-    hotelRating: '5★ Boutique Hotel',
+    activitiesCount: 12,
+    hotelRating: '5★ Luxury Ryokan & Heritage Hotels',
     durationDays: 10,
     durationNights: 9,
-    groupSize: 'Max 12 Guests',
-    priceUSD: 3499,
-    image: '/images/pexels-huy-phan-316220-34991523.jpg',
-    rating: 4.98,
-    reviewsCount: 142,
-    badges: ['Best Seller', 'Sakura Guaranteed', '7-Day JR Pass Included'],
+    groupSize: 'Max 12 Guests (Small Group)',
+    priceUSD: 4200,
+    image: '/images/pexels-satoshi-1325837.jpg',
+    rating: 4.95,
+    reviewsCount: 128,
+    badges: ['Best Seller', 'Sakura 2027 Guaranteed', 'Shinkansen Included'],
     highlights: [
       'Private Geisha Tea Ceremony in Gion, Kyoto',
-      'Bullet train first-class seat to Hakone',
-      'Stay in luxury Kaiseki Onsen Ryokan near Mt. Fuji',
-      'After-hours illuminations at Sensō-ji Temple'
+      'First-Class Green Car Nozomi Shinkansen Ticket',
+      'Mt. Fuji Panoramic Onsen Ryokan Stay with Kaiseki Dinner',
+      'Shibuya Sky Sunset Access & Tsukiji Outer Market Tasting'
     ],
-    inclusions: ['4★ & 5★ Boutique Hotels', 'Bullet Train Passes', 'Private English Guide', 'Daily Breakfast & 4 Chef Dinners'],
+    inclusions: [
+      '5★ Luxury Accommodation throughout',
+      'Daily Artisanal Breakfast & 5 Chef Kaiseki Dinners',
+      'JR Green Car Shinkansen Passes & Private Chauffeured Coach',
+      'All UNESCO Shrine Entrance Fees & Licensed English Specialist Guide',
+      '24/7 Concierge & Luggage Door-to-Door Transfer Service'
+    ],
     itinerary: [
-      { day: 1, title: 'Arrival in Tokyo Metropolis', description: 'Private chauffeur transfer to Shibuya luxury hotel. Evening welcome cocktail overlooking Shinjuku skyline.', meals: 'Dinner included', accommodation: 'TRUNK Hotel Shibuya' },
-      { day: 2, title: 'Ancient Temples & Sakura Parks', description: 'Morning guided walk through Shinjuku Gyoen National Garden under pink blossoms. Afternoon craft sake tasting in Asakusa.', meals: 'Breakfast & Lunch', accommodation: 'TRUNK Hotel Shibuya' },
-      { day: 3, title: 'Mt. Fuji & Hakone Hot Springs', description: 'Ride the Romancecar train to Hakone. Cruise Lake Ashi on a private boat with views of Mt. Fuji.', meals: 'Breakfast & Multi-course Kaiseki Dinner', accommodation: 'Gora Kadan Onsen Ryokan' },
-      { day: 4, title: 'Bullet Train to Kyoto Cultural Capital', description: 'Board the Shinkansen Green Class to Kyoto. Sunset walk through Fushimi Inari 10,000 Vermilion Torii Gates.', meals: 'Breakfast', accommodation: 'Sowaka Kyoto Boutique Hotel' },
-      { day: 5, title: 'Arashiyama Bamboo & Zen Gardens', description: 'Early morning quiet entry to Arashiyama Bamboo Grove followed by Tenryu-ji Zen temple gardens.', meals: 'Breakfast & Traditional Shojin Ryori Lunch', accommodation: 'Sowaka Kyoto Boutique Hotel' },
-      { day: 6, title: 'Private Geisha Tea Ceremony & Gion Walk', description: 'Exclusive audience with a Maiko (apprentice Geisha) in an 18th-century tea house.', meals: 'Breakfast & Kaiseki Tea Dinner', accommodation: 'Sowaka Kyoto Boutique Hotel' },
-      { day: 7, title: 'Nara Deer Park & Ancient Todai-ji Giant Buddha', description: 'Day excursion to Nara. Interact with friendly sika deer and gaze upon the world\'s largest bronze Buddha.', meals: 'Breakfast', accommodation: 'Sowaka Kyoto Boutique Hotel' },
-      { day: 8, title: 'Osaka Street Food Extravaganza', description: 'Transfer to Osaka. Evening food crawl tasting Takoyaki, Okonomiyaki, and Wagyu beef in Dotonbori.', meals: 'Breakfast & Street Food Tasting Tour', accommodation: 'Swissôtel Nankai Osaka' },
-      { day: 9, title: 'Himeji Castle & Farewell Ceremony', description: 'Visit the pristine white castle of Himeji surrounded by 1,000 weeping cherry trees.', meals: 'Breakfast & Farewell Omakase Dinner', accommodation: 'Swissôtel Nankai Osaka' },
-      { day: 10, title: 'Sayonara Japan', description: 'Private transfer to Kansai International Airport (KIX) or Kansai Shinkansen station.', meals: 'Breakfast included', accommodation: 'N/A' }
+      {
+        day: 1,
+        title: 'Arrival in Tokyo Metropolis & Welcome Kaiseki Banquet',
+        description: 'Private airport transfer to your luxury hotel. Meet your journey concierge for an evening welcome toast overlooking Tokyo Tower.',
+        meals: 'Dinner Included',
+        accommodation: 'The Capitol Hotel Tokyu (5★)'
+      },
+      {
+        day: 2,
+        title: 'Edo Traditions & Shibuya Sunset Horizon',
+        description: 'Morning walking tour of Sensō-ji Temple in Asakusa. Afternoon tea in Harajuku and private sunset deck access at Shibuya Sky.',
+        meals: 'Breakfast & Lunch',
+        accommodation: 'The Capitol Hotel Tokyu (5★)'
+      },
+      {
+        day: 3,
+        title: 'Sacred Mount Fuji & Hakone Onsen Sanctuary',
+        description: 'Travel by luxury coach to Lake Kawaguchiko. Ride the Hakone Ropeway over volcanic Owakudani and check into your private hot spring ryokan.',
+        meals: 'Breakfast & Traditional Kaiseki Dinner',
+        accommodation: 'Gora Kadan Hakone Ryokan (5★ Luxury Onsen)'
+      },
+      {
+        day: 4,
+        title: 'Bullet Express to Kyoto Imperial Capital',
+        description: 'Board the 320 km/h Nozomi Shinkansen Green Car to Kyoto. Evening twilight walk through lantern-lit Gion machiya alleys.',
+        meals: 'Breakfast & Dinner',
+        accommodation: 'Sowaka Kyoto Heritage Hotel (5★)'
+      },
+      {
+        day: 5,
+        title: 'Arashiyama Bamboo Sanctuary & Fushimi Inari Gates',
+        description: 'Early morning quiet path through Arashiyama Bamboo Grove followed by 10,000 vermilion Torii gates of Fushimi Inari.',
+        meals: 'Breakfast & Matcha Tea Ceremony',
+        accommodation: 'Sowaka Kyoto Heritage Hotel (5★)'
+      }
     ]
   },
   {
-    id: 'first-timers-golden-route',
-    title: 'Essential Japan First-Timer Discovery',
-    subtitle: 'High-speed Shinkansen journey through Tokyo, Hakone, Kyoto & Osaka',
-    category: 'golden',
-    regionId: 'kanto',
-    citiesStay: 'Tokyo 3N, Hakone 1N, Kyoto 2N',
+    id: 'sakura-special-2027',
+    title: 'Cherry Blossom Mankai Expedition 2027',
+    subtitle: 'Chasing Peak Sakura Bloom from Tokyo Moats to Kyoto Canals',
+    category: 'sakura',
+    regionId: 'kansai',
+    citiesStay: 'Tokyo 4N, Hakone 1N, Kyoto 4N',
     citiesCount: 3,
     hotelsCount: 3,
     transfersCount: 4,
-    activitiesCount: 10,
-    hotelRating: '4★ Hotel',
-    durationDays: 7,
-    durationNights: 6,
-    groupSize: 'Max 14 Guests',
-    priceUSD: 2499,
-    image: '/images/pexels-agustin-villalba-589020055-17258243.jpg',
-    rating: 4.95,
-    reviewsCount: 218,
-    badges: ['Top Choice', 'JR Pass Included', 'Small Group'],
-    highlights: [
-      'Tokyo Skytree & Meiji Shrine guided tour',
-      'Hakone Cable Car & Lake Ashi Pirate Ship',
-      'Bullet train from Mt. Fuji to Kyoto',
-      'Kyoto Golden Pavilion (Kinkaku-ji)'
-    ],
-    inclusions: ['4★ Central Hotels', '7-Day JR Pass', 'Pocket Wi-Fi Device', 'Full-time English Escort'],
-    itinerary: [
-      { day: 1, title: 'Touchdown Tokyo', description: 'Arrival at Narita or Haneda Airport. Pocket Wi-Fi setup & check-in.', meals: 'Welcome Dinner', accommodation: 'Hotel Gracery Shinjuku' },
-      { day: 2, title: 'Tokyo Neon & Zen', description: 'Explore Meiji Jingu Shrine, Harajuku Takeshita Street, and Shibuya Crossing.', meals: 'Breakfast', accommodation: 'Hotel Gracery Shinjuku' },
-      { day: 3, title: 'Hakone & Mt. Fuji Wonders', description: 'Travel to Fuji-Hakone-Izu National Park. Open-air hot spring bath experience.', meals: 'Breakfast & Dinner', accommodation: 'Yumoto Fujiya Hotel' },
-      { day: 4, title: 'High-Speed Bullet Train to Kyoto', description: 'Ride 280 km/h Shinkansen. Evening walk in Pontocho Alley.', meals: 'Breakfast', accommodation: 'Kyoto Century Hotel' },
-      { day: 5, title: 'Kyoto Golden Icons', description: 'Kinkaku-ji (Golden Pavilion), Ryoan-ji Rock Garden & Kiyomizu-dera Temple.', meals: 'Breakfast & Lunch', accommodation: 'Kyoto Century Hotel' },
-      { day: 6, title: 'Osaka Gastronomy Night', description: 'Visit Osaka Castle and immerse in the food lovers paradise of Dotonbori.', meals: 'Breakfast & Food Tour', accommodation: 'Cross Hotel Osaka' },
-      { day: 7, title: 'Departure', description: 'Direct airport express train transfer to KIX or return to Tokyo via Shinkansen.', meals: 'Breakfast', accommodation: 'N/A' }
-    ]
-  },
-  {
-    id: 'luxury-onsen-ryokan-sanctuary',
-    title: 'Zen, Onsen & Ryokan Luxury Sanctuary',
-    subtitle: 'Indulgent hot springs, Michelin dining & private temple sanctuaries',
-    category: 'luxury',
-    regionId: 'tohoku',
-    citiesStay: 'Tokyo 1N, Ginzan Onsen 2N, Kyoto 4N',
-    citiesCount: 3,
-    hotelsCount: 3,
-    transfersCount: 6,
-    activitiesCount: 12,
-    hotelRating: '5★ Luxury Ryokan',
-    durationDays: 8,
-    durationNights: 7,
-    groupSize: 'Private Ultra-VIP',
-    priceUSD: 5899,
-    image: '/images/pexels-drkesu-12045314.jpg',
-    rating: 5.0,
-    reviewsCount: 64,
-    badges: ['VIP Experience', 'Private Chauffeur', '5★ Ryokans'],
-    highlights: [
-      'Private helicopter tour over Mt. Fuji & Hakone Crater',
-      'Exclusive stay at 100-year-old wooden Ginzan Onsen Ryokan',
-      'Multi-course Michelin 3-Star Kaiseki dining in Kyoto',
-      'Private Zazen meditation with head monk'
-    ],
-    inclusions: ['Luxury Ryokans & 5★ Hotels', 'Private Executive Alphard Van', 'Luggage Forwarding', '24/7 Butler Service'],
-    itinerary: [
-      { day: 1, title: 'Aman Tokyo Arrival', description: 'Check-in to Aman Tokyo. Private evening champagne tasting on the 33rd floor.', meals: 'Dinner', accommodation: 'Aman Tokyo' },
-      { day: 2, title: 'Ginzan Onsen Winter/Autumn Realm', description: 'First class Gran Class Shinkansen to Yamagata and Ginzan Onsen retreat.', meals: 'Breakfast & Kaiseki Dinner', accommodation: 'Notoya Ryokan' },
-      { day: 3, title: 'Natural Healing Waters', description: 'Day of relaxation in private outdoor rotenburo hot spring baths.', meals: 'Breakfast, Lunch & Dinner', accommodation: 'Notoya Ryokan' },
-      { day: 4, title: 'Hakone Sanctuary', description: 'Transfer to Gora Kadan. Private tea master ceremony in traditional sukiya room.', meals: 'Breakfast & Kaiseki Dinner', accommodation: 'Gora Kadan' },
-      { day: 5, title: 'Helicopter Fuji Pass', description: 'Helicopter flight offering panoramic aerial views of Mt. Fuji peak.', meals: 'Breakfast', accommodation: 'Gora Kadan' },
-      { day: 6, title: 'Kyoto Four Seasons & Temple Access', description: 'Bullet train to Kyoto. Exclusive after-hours access to Daitoku-ji sub-temple.', meals: 'Breakfast & Michelin Dinner', accommodation: 'Four Seasons Kyoto' },
-      { day: 7, title: 'Maiko Performance & Bamboo Sanctuary', description: 'Private performance by Kyoto top geiko with traditional shamisen music.', meals: 'Breakfast & Dinner', accommodation: 'Four Seasons Kyoto' },
-      { day: 8, title: 'Departure with Concierge Escort', description: 'Private limousine transfer to Kansai or Tokyo airport.', meals: 'Breakfast', accommodation: 'N/A' }
-    ]
-  },
-  {
-    id: 'anime-tech-pop-culture',
-    title: 'Otaku Dream: Tech, Gaming & Pop Culture',
-    subtitle: 'From Akihabara tech arcades to Ghibli Park & Nintendo World',
-    category: 'anime',
-    regionId: 'kanto',
-    citiesStay: 'Tokyo 4N, Nagoya 1N, Osaka 3N',
-    citiesCount: 3,
-    hotelsCount: 3,
-    transfersCount: 5,
-    activitiesCount: 16,
-    hotelRating: '4★ Themed Hotel',
+    activitiesCount: 14,
+    hotelRating: '5★ Luxury Boutique',
     durationDays: 9,
     durationNights: 8,
-    groupSize: 'Max 10 Fans',
-    priceUSD: 2899,
-    image: '/images/pexels-markus-winkler-1430818-19867354.jpg',
-    rating: 4.96,
-    reviewsCount: 95,
-    badges: ['Ghibli Tickets Included', 'Super Nintendo World', 'Anime Escort'],
+    groupSize: 'Max 10 Guests',
+    priceUSD: 4850,
+    image: '/images/pexels-songhanphoto-10618962.jpg',
+    rating: 4.98,
+    reviewsCount: 94,
+    badges: ['Peak Bloom Forecast', 'Exclusive Access', 'Small Group'],
     highlights: [
-      'Ghibli Museum Mitaka & Ghibli Park Nagoya entry',
-      'Akihabara electronic district VIP retro arcade hunt',
-      'Super Nintendo World VIP Express Pass in USJ Osaka',
-      'teamLab Planets immersive digital art museum'
+      'Private Night Hanami Boat Cruise along Meguro River',
+      'Philosopher’s Path Sakura Walk in Kyoto with Master Botanist',
+      'Private Tea Ceremony with Senior Maiko in Gion',
+      'Exclusive Access to Closed Temple Gardens in Kyoto'
     ],
-    inclusions: ['Theme Park Fast Passes', 'Ghibli Tickets', '4★ Themed Hotels', 'JR Pass'],
+    inclusions: [
+      'Boutique 5★ Heritage Accommodations',
+      'Private Chauffeured Transits & Shinkansen Passes',
+      'Exclusive Evening Access Tickets & Private Hanami Cruises',
+      'Full Board Dining (Includes 2 Michelin-Starred Dinners)'
+    ],
     itinerary: [
-      { day: 1, title: 'Cyberpunk Tokyo', description: 'Arrive in Tokyo. Night walk through Shinjuku Kabukicho and 3D Cat billboard.', meals: 'Dinner', accommodation: 'Hotel Gracery (Godzilla Hotel)' },
-      { day: 2, title: 'Akihabara Deep Dive', description: 'Guided tour of Mandarake, Radio Kaikan, and retro gaming shops.', meals: 'Breakfast', accommodation: 'Hotel Gracery' },
-      { day: 3, title: 'Ghibli Museum & Odaiba Robots', description: 'Step into Hayao Miyazaki wonderland in Mitaka, visit Unicorn Gundam statue.', meals: 'Breakfast', accommodation: 'Hotel Gracery' },
-      { day: 4, title: 'teamLab Planets & Nakano Broadway', description: 'Walk through water & light art, then shop vintage collectible anime figurines.', meals: 'Breakfast', accommodation: 'Hotel Gracery' },
-      { day: 5, title: 'Bullet Train to Nagoya Ghibli Park', description: 'Explore Dondoko Forest and Grand Warehouse in Ghibli Park.', meals: 'Breakfast & Lunch', accommodation: 'Nagoya Marriott Associa' },
-      { day: 6, title: 'Osaka & Dotonbori Gaming Arcades', description: 'Transfer to Osaka. Visit Nipponbashi Denden Town.', meals: 'Breakfast', accommodation: 'Namba Oriental Hotel' },
-      { day: 7, title: 'Super Nintendo World & USJ', description: 'Full day VIP access to Mario Kart Bowser Challenge & Wizarding World.', meals: 'Breakfast', accommodation: 'Namba Oriental Hotel' },
-      { day: 8, title: 'Pokemon Center & Farewell Feast', description: 'Visit largest Pokemon Center Megastore & themed cafe.', meals: 'Breakfast & Farewell Dinner', accommodation: 'Namba Oriental Hotel' },
-      { day: 9, title: 'Sayonara & Departure', description: 'Airport transfer with custom anime souvenir gift box.', meals: 'Breakfast', accommodation: 'N/A' }
+      {
+        day: 1,
+        title: 'Tokyo Arrival & Night Hanami Illuminations',
+        description: 'Arrive in Tokyo. Night stroll under illuminated cherry blossom trees along Chidorigafuchi Moat.',
+        meals: 'Welcome Banquet',
+        accommodation: 'Palace Hotel Tokyo (5★)'
+      },
+      {
+        day: 2,
+        title: 'Shinjuku Gyoen Blossom Varieties',
+        description: 'In-depth exploration of 60 cherry blossom species in Shinjuku Gyoen with expert guide.',
+        meals: 'Breakfast & Lunch',
+        accommodation: 'Palace Hotel Tokyo (5★)'
+      }
     ]
   },
   {
-    id: 'hokkaido-powder-onsen',
-    title: 'Hokkaido Snow Powder & Hot Springs',
-    subtitle: 'Niseko skiing, Otaru winter canals & Sapporo snow culinary magic',
+    id: 'luxury-ryokan-sanctuary',
+    title: 'Zen Sanctuary & Private Hot Spring Retreat',
+    subtitle: 'Ultra-Luxury Ryokan Living, Kaiseki Gastronomy & Onsen Wellness',
+    category: 'luxury',
+    regionId: 'kansai',
+    citiesStay: 'Kyoto 3N, Hakone 2N, Nara 2N',
+    citiesCount: 3,
+    hotelsCount: 3,
+    transfersCount: 3,
+    activitiesCount: 8,
+    hotelRating: '5★ Relais & Châteaux Ryokans',
+    durationDays: 7,
+    durationNights: 6,
+    groupSize: 'Max 8 Guests (Private Ultra-Luxe)',
+    priceUSD: 6400,
+    image: '/images/matcha-tea-ceremony.png',
+    rating: 5.0,
+    reviewsCount: 62,
+    badges: ['Ultra Luxury', 'Private Rotenburo', 'Kaiseki Dining'],
+    highlights: [
+      'Private Open-Air Onsen Bath in Every Ryokan Suite',
+      'Multi-course Seasonal Kaiseki Dinner by 3-Star Michelin Master',
+      'Private Zen Garden Meditation Session with Head Monk',
+      'Helicopter Transfer over Mount Fuji & Lake Ashi'
+    ],
+    inclusions: [
+      'Private Villa & Suite Accommodations with Outdoor Onsen',
+      'Private Chauffeured Mercedes Benz Transits throughout',
+      'All Michelin Gourmet Dining & Rare Vintage Sake Pairings'
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Kyoto Sanctuary Check-In & Garden Meditation',
+        description: 'Check into your private ryokan suite nestled beside the Arashiyama forest.',
+        meals: 'Welcome Kaiseki Feast',
+        accommodation: 'Hoshinoya Kyoto (5★ Ultra Luxury)'
+      }
+    ]
+  },
+  {
+    id: 'anime-tech-odyssey',
+    title: 'Akihabara Tech & Modern Anime Odyssey',
+    subtitle: 'Tokyo Cyberpunk Alleys, Ghibli Museum & Osaka Gaming Culture',
+    category: 'anime',
+    regionId: 'kanto',
+    citiesStay: 'Tokyo 5N, Osaka 3N',
+    citiesCount: 2,
+    hotelsCount: 2,
+    transfersCount: 3,
+    activitiesCount: 15,
+    hotelRating: '4.5★ Contemporary Tech Hotels',
+    durationDays: 8,
+    durationNights: 7,
+    groupSize: 'Max 14 Guests',
+    priceUSD: 3350,
+    image: '/images/pexels-sarmat-batagov-776392502-35139475.jpg',
+    rating: 4.89,
+    reviewsCount: 112,
+    badges: ['Pop Culture', 'Ghibli Museum Guaranteed', 'Akihabara VIP'],
+    highlights: [
+      'Guaranteed Tickets to Ghibli Museum & Ghibli Park',
+      'Private Akihabara Retro Gaming & Anime Concierge Shopping',
+      'teamLab Planets Immersive Digital Art Installation',
+      'Osaka Dotonbori Street Food & Retro Arcade Crawl'
+    ],
+    inclusions: [
+      '4.5★ Modern Central Hotels',
+      'All Museum & Exhibition VIP Tickets Included',
+      'JR Bullet Train Passes & Suica Metro Cards'
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Tokyo Arrival & Shinjuku Neon Night Walk',
+        description: 'Explore Golden Gai, Godzilla Head, and VR Shinjuku entertainment center.',
+        meals: 'Welcome Dinner',
+        accommodation: 'Hotel Gracery Shinjuku (4.5★)'
+      }
+    ]
+  },
+  {
+    id: 'art-heritage-islands',
+    title: 'Seto Inland Sea Art Islands & Miyajima',
+    subtitle: 'Naoshima Modern Art, Floating Torii & Hiroshima Peace Park',
     category: 'culture',
-    regionId: 'hokkaido',
-    citiesStay: 'Sapporo 3N, Niseko 2N, Noboribetsu 2N',
+    regionId: 'chugoku_shikoku',
+    citiesStay: 'Hiroshima 2N, Naoshima 2N, Kyoto 3N',
     citiesCount: 3,
     hotelsCount: 3,
     transfersCount: 4,
     activitiesCount: 11,
-    hotelRating: '5★ Snow Resort',
-    durationDays: 8,
-    durationNights: 7,
-    groupSize: 'Max 12 Guests',
-    priceUSD: 3199,
-    image: '/images/pexels-kuma-jio-2150949207-31416355.jpg',
-    rating: 4.92,
-    reviewsCount: 78,
-    badges: ['Snow & Ski', 'Onsen Included', 'Gourmet Seafood'],
-    highlights: [
-      'Niseko champagne powder ski/snowboard experience',
-      'Noboribetsu Hell Valley sulfur volcanic thermal springs',
-      'Sapporo Snow Festival illuminations & King Crab feast',
-      'Romantic lamp-lit Otaru Canal stroll'
-    ],
-    inclusions: ['Ski Lift Passes', 'Luxury Snow Resorts', 'Onsen Entry', 'Fresh Seafood Meals'],
-    itinerary: [
-      { day: 1, title: 'Sapporo Arrival', description: 'Flight to New Chitose Airport (CTS). Transfer to Sapporo center.', meals: 'Seafood Dinner', accommodation: 'JR Tower Hotel Nikko Sapporo' },
-      { day: 2, title: 'Sapporo Landmarks & Beer Museum', description: 'Visit Odori Park, Clock Tower, and Sapporo Beer Garden lamb BBQ.', meals: 'Breakfast & Dinner', accommodation: 'JR Tower Hotel Nikko Sapporo' },
-      { day: 3, title: 'Otaru Glassworks & Canals', description: 'Day trip to seaside Otaru. Taste fresh Uni sea urchin & LeTAO cheesecake.', meals: 'Breakfast & Lunch', accommodation: 'JR Tower Hotel Nikko Sapporo' },
-      { day: 4, title: 'Transfer to Niseko Resort', description: 'Scenic drive to Niseko powder snow paradise.', meals: 'Breakfast & Dinner', accommodation: 'Aya Niseko Luxury Resort' },
-      { day: 5, title: 'Niseko Ski & Onsen Day', description: 'World-famous powder snow slopes and slope-side hot spring relaxation.', meals: 'Breakfast', accommodation: 'Aya Niseko Luxury Resort' },
-      { day: 6, title: 'Noboribetsu Jigokudani (Hell Valley)', description: 'Explore steaming volcanic vents and stay at traditional thermal ryokan.', meals: 'Breakfast & Kaiseki Dinner', accommodation: 'Dai-ichi Takimotokan' },
-      { day: 7, title: 'Lake Toya & Mount Usu Volcano', description: 'Ropeway ride up Mt. Usu with crater lake panoramas.', meals: 'Breakfast', accommodation: 'Dai-ichi Takimotokan' },
-      { day: 8, title: 'Departure from Sapporo', description: 'Chitose airport transfer.', meals: 'Breakfast', accommodation: 'N/A' }
-    ]
-  },
-  {
-    id: 'art-islands-miyajima-heritage',
-    title: 'Naoshima Art Islands & Sacred Miyajima',
-    subtitle: 'Seto Inland Sea contemporary art, Hiroshima peace & floating Torii',
-    category: 'culture',
-    regionId: 'chugoku_shikoku',
-    citiesStay: 'Naoshima 2N, Hiroshima 1N, Miyajima 3N',
-    citiesCount: 3,
-    hotelsCount: 3,
-    transfersCount: 5,
-    activitiesCount: 13,
-    hotelRating: '4★ Heritage Stays',
+    hotelRating: '5★ Art & Heritage Hotels',
     durationDays: 7,
     durationNights: 6,
     groupSize: 'Max 10 Guests',
-    priceUSD: 2999,
+    priceUSD: 3950,
     image: '/images/pexels-imageriesnap-14055275.jpg',
-    rating: 4.97,
-    reviewsCount: 52,
-    badges: ['Art & Heritage', 'Ferry Included', 'Ryokan Night'],
+    rating: 4.93,
+    reviewsCount: 76,
+    badges: ['Art & Culture', 'Naoshima VIP', 'Miyajima Overnight'],
     highlights: [
-      'Naoshima & Teshima island museums (Chichu Art Museum)',
-      'Overnight stay on sacred Miyajima island with floating Torii views',
-      'Hiroshima Peace Memorial Park & Museum guided reflection',
-      'Kurashiki Bikan historical canal quarter'
+      'Overnight Stay at Benesse House Art Museum Hotel on Naoshima',
+      'High Tide & Low Tide Guided Walks at Miyajima Floating Torii',
+      'Hiroshima Peace Memorial Museum Private Historical Tour',
+      'Seto Inland Sea Private Speedboat Island Hopping'
     ],
-    inclusions: ['Ferry & Train Passes', 'Museum Tickets', 'Boutique Stays', 'Local Art Guide'],
+    inclusions: [
+      'Benesse House & Boutique Island Hotel Stays',
+      'Private Speedboat & Ferry Passes',
+      'All Art Site Entry Passes & Expert Art Curator Guide'
+    ],
     itinerary: [
-      { day: 1, title: 'Arrival in Okayama / Kurashiki', description: 'Bullet train to Okayama. Check in near historic canal quarter.', meals: 'Dinner', accommodation: 'Kurashiki Kokusai Hotel' },
-      { day: 2, title: 'Naoshima Island Art Expedition', description: 'Ferry to Naoshima. See Yayoi Kusama Yellow Pumpkin & Tadao Ando architecture.', meals: 'Breakfast & Lunch', accommodation: 'Benesse House Naoshima' },
-      { day: 3, title: 'Teshima Art Museum & Inland Sea', description: 'Discover Teshima Art Museum drop of water structure overlooking sea.', meals: 'Breakfast', accommodation: 'Benesse House Naoshima' },
-      { day: 4, title: 'Hiroshima Peace & Reflection', description: 'Bullet train to Hiroshima. Visit Peace Dome & Museum with local historian.', meals: 'Breakfast', accommodation: 'Sheraton Grand Hiroshima' },
-      { day: 5, title: 'Sacred Island of Miyajima', description: 'Ferry to Miyajima. Watch floating Torii gate at high tide and sunset.', meals: 'Breakfast & Oyster Dinner', accommodation: 'Iwaso Ryokan Miyajima' },
-      { day: 6, title: 'Mount Misen Cable Car & Wild Monkeys', description: 'Ascend Mt. Misen for panoramic 360° views across Seto Inland Sea islands.', meals: 'Breakfast', accommodation: 'Iwaso Ryokan Miyajima' },
-      { day: 7, title: 'Sayonara Setouchi', description: 'Return ferry to Hiroshima Shinkansen station.', meals: 'Breakfast', accommodation: 'N/A' }
+      {
+        day: 1,
+        title: 'Hiroshima Arrival & Miyajima Island Sunset',
+        description: 'Take ferry to Miyajima island. Watch sunset behind the famous floating Torii gate.',
+        meals: 'Grilled Oyster Dinner',
+        accommodation: 'Iwaso Ryokan Miyajima (5★)'
+      }
     ]
-  }
-];
-
-export const TRUST_BADGES = [
-  {
-    icon: 'ShieldCheck',
-    title: 'Official JR Pass Partner',
-    desc: 'Authorized global distributor for Japan Railways bullet train passes & Green Class bookings.'
-  },
-  {
-    icon: 'Headphones',
-    title: '24/7 English Tokyo Support',
-    desc: 'Dedicated local concierge team in Tokyo & Kyoto on WhatsApp for real-time trip assistance.'
-  },
-  {
-    icon: 'Sparkles',
-    title: '100% Tailor-Made Flex',
-    desc: 'Customize any itinerary with private tea ceremonies, ryokan upgrades, or extra days.'
-  },
-  {
-    icon: 'Award',
-    title: 'Sakura Guarantee 2027',
-    desc: 'Dynamic blooming tracking and flexible itinerary adjustments during peak cherry blossom weeks.'
   }
 ];

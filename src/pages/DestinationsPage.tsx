@@ -4,7 +4,7 @@ import { REGIONS, type RegionData } from '../data/japanData';
 import { MapPin, ArrowRight, Train, Sun, CheckCircle2, Compass } from 'lucide-react';
 
 interface DestinationsPageProps {
-  onSelectRegionFilter: (regionId: string) => void;
+  onSelectRegionFilter?: (regionId: string) => void;
 }
 
 export const DestinationsPage: React.FC<DestinationsPageProps> = () => {
@@ -13,14 +13,16 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = () => {
 
   const currentRegion: RegionData = REGIONS.find((r: RegionData) => r.id === activeRegionTab) || REGIONS[0];
 
+  const isClickableRegion = (regionId: string) => regionId === 'kanto' || regionId === 'kansai';
+
   return (
-    <div className="min-h-screen bg-[#FAF9F5] pt-24 pb-20">
+    <div className="min-h-screen bg-[#FAF9F5] pt-24 pb-20 font-jakarta">
       {/* Hero Photography Banner */}
-      <section className="relative h-[440px] sm:h-[500px] w-full overflow-hidden mb-12">
+      <section className="relative h-[440px] sm:h-[500px] w-full overflow-hidden mb-12 bg-slate-950">
         <img
           src="/images/pexels-kuma-jio-2150949207-31416355.jpg"
           alt="Mt. Fuji & Chureito Pagoda"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-90"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20 opacity-95" />
 
@@ -53,7 +55,7 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = () => {
           </h2>
         </div>
 
-        {/* Pure Typography Region Selector Tabs */}
+        {/* Region Selector Tabs */}
         <div className="flex items-center justify-center gap-6 sm:gap-8 mb-10 overflow-x-auto pb-2 no-scrollbar">
           {REGIONS.map((reg: RegionData) => {
             const isSelected = activeRegionTab === reg.id;
@@ -73,15 +75,15 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = () => {
           })}
         </div>
 
-        {/* Selected Region Detailed Card Showcase (Zero Border-Radius, Lag-Free) */}
+        {/* Selected Region Showcase Card */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border border-slate-200/80 p-6 sm:p-10 bg-white shadow-xl rounded-none">
           {/* Left Imagery Stack */}
-          <div className="lg:col-span-6 relative h-[360px] sm:h-[400px] overflow-hidden shadow-lg group rounded-none">
+          <div className="lg:col-span-6 relative h-[360px] sm:h-[400px] overflow-hidden shadow-lg group rounded-none bg-slate-950">
             <img
               src={currentRegion.heroImage}
               alt={currentRegion.name}
               loading="lazy"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 text-white space-y-1">
@@ -136,61 +138,83 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = () => {
               </div>
             </div>
 
-            {/* CTA */}
+            {/* CTA (Only clickable if Kanto or Kansai) */}
             <div className="pt-2 flex items-center gap-3 flex-wrap">
-              <button
-                onClick={() => {
-                  const destId = currentRegion.id === 'kanto' ? 'tokyo' : currentRegion.id === 'kansai' ? 'kyoto' : currentRegion.id;
-                  navigate(`/destination/${destId}`);
-                }}
-                className="w-full sm:w-auto bg-slate-900 hover:bg-rose-600 text-white font-bold px-8 py-3.5 text-xs uppercase tracking-widest shadow-xl transition-colors cursor-pointer flex items-center justify-center gap-2 rounded-none group"
-              >
-                <span>Read Full {currentRegion.name} Blog Guide</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
+              {isClickableRegion(currentRegion.id) ? (
+                <button
+                  onClick={() => {
+                    const destId = currentRegion.id === 'kanto' ? 'tokyo' : 'kyoto';
+                    navigate(`/destination/${destId}`);
+                  }}
+                  className="w-full sm:w-auto bg-slate-900 hover:bg-rose-600 text-white font-bold px-8 py-3.5 text-xs uppercase tracking-widest shadow-xl transition-colors cursor-pointer flex items-center justify-center gap-2 rounded-none group"
+                >
+                  <span>Read Full {currentRegion.name} Blog Guide</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              ) : (
+                <div className="px-6 py-3 bg-slate-100 border border-slate-300 text-slate-500 font-mono font-bold text-xs uppercase tracking-wider">
+                  Region Guide Coming Soon
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* 6 Full Regional Photography Cards Grid */}
+        {/* 6 Full Regional Photography Cards Grid (ONLY KANTO & KANSAI ARE CLICKABLE) */}
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {REGIONS.map((reg: RegionData) => {
-            const destId = reg.id === 'kanto' ? 'tokyo' : reg.id === 'kansai' ? 'kyoto' : reg.id;
+            const clickable = isClickableRegion(reg.id);
+            const destId = reg.id === 'kanto' ? 'tokyo' : 'kyoto';
+
             return (
               <div
                 key={reg.id}
-                onClick={() => navigate(`/destination/${destId}`)}
-                className="group relative h-[380px] sm:h-[420px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-end cursor-pointer border border-white/20 rounded-none"
+                onClick={() => {
+                  if (clickable) {
+                    navigate(`/destination/${destId}`);
+                  }
+                }}
+                className={`group relative h-[380px] sm:h-[420px] overflow-hidden shadow-xl transition-all duration-500 flex flex-col justify-end border border-white/20 rounded-none bg-slate-950 ${
+                  clickable ? 'cursor-pointer hover:shadow-2xl' : 'cursor-default opacity-85'
+                }`}
               >
-              <img
-                src={reg.heroImage}
-                alt={reg.name}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
+                <img
+                  src={reg.heroImage}
+                  alt={reg.name}
+                  loading="lazy"
+                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${
+                    clickable ? 'group-hover:scale-105 opacity-90' : 'opacity-70'
+                  }`}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent opacity-90" />
 
-              <div className="relative z-10 p-7 text-white space-y-2 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
-                <div className="flex items-center justify-between text-xs text-rose-300 font-bold tracking-widest uppercase">
-                  <div className="flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-rose-400" />
-                    <span>{reg.english}</span>
+                <div className="relative z-10 p-7 text-white space-y-2 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
+                  <div className="flex items-center justify-between text-xs text-rose-300 font-bold tracking-widest uppercase">
+                    <div className="flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-rose-400" />
+                      <span>{reg.english}</span>
+                    </div>
+                    <span className="font-kanji font-normal text-sm text-white/90">{reg.kanji}</span>
                   </div>
-                  <span className="font-kanji font-normal text-sm text-white/90">{reg.kanji}</span>
-                </div>
 
-                <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-white">
-                  {reg.name}
-                </h3>
+                  <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-white">
+                    {reg.name}
+                  </h3>
 
-                <div className="pt-1 flex items-center text-xs font-bold text-rose-300 gap-1 uppercase tracking-wider">
-                  <span>Explore {reg.packageCount} Packages</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  <div className="pt-1 flex items-center text-xs font-bold text-rose-300 gap-1 uppercase tracking-wider">
+                    {clickable ? (
+                      <>
+                        <span>Explore {reg.packageCount} Packages</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    ) : (
+                      <span className="text-slate-400 font-mono text-[11px]">Region Guide Coming Soon</span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
         </div>
       </section>
     </div>

@@ -132,11 +132,7 @@ function AppRoutes({
       />
       <Route
         path="/sakura-planner"
-        element={
-          <SakuraPlannerPage
-            onSelectPackage={handleViewPackage}
-          />
-        }
+        element={<SakuraPlannerPage />}
       />
       <Route
         path="/events"

@@ -93,7 +93,7 @@ export const TestimonialsMarquee: React.FC = () => {
       return (
         <div
           key={key}
-          className="bg-white p-6 sm:p-7 border border-slate-200/80 shadow-md space-y-4 hover:border-slate-400 transition-all rounded-none"
+          className="bg-white p-6 sm:p-7 shadow-md space-y-4 hover:border-slate-400 transition-all rounded-none"
         >
           <div className="flex items-center gap-3">
             <img
@@ -235,7 +235,7 @@ export const TestimonialsMarquee: React.FC = () => {
   };
 
   return (
-    <section className="py-20 sm:py-24 bg-[#FAF9F5] relative overflow-hidden border-t border-slate-200/50">
+    <section className="py-4 sm:py-4 bg-[#FAF9F5] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Column (Heading & Subtitle) */}

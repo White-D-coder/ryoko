@@ -60,7 +60,7 @@ export const CustomInquiryForm: React.FC = () => {
   };
 
   return (
-    <section className="py-20 sm:py-20 bg-[#FAF9F5] text-slate-900 relative overflow-hidden border-t border-slate-200/50">
+    <section className="py-20 sm:py-20 bg-[#FAF9F5] text-slate-900 relative overflow-hidden border-slate-200/50">
       {/* Background Kanji Watermark */}
       <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none select-none">
         <span className="font-kanji text-[30vw] font-black text-[#0F172A]">

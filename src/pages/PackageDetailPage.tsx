@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { TOUR_PACKAGES, type TourPackage } from '../data/japanData';
-import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, Train, Compass, Utensils } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, Train, Compass, Utensils, XCircle } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
 
 const DAY_KANJI = ['一日目', '二日目', '三日目', '四日目', '五日目', '六日目', '七日目', '八日目', '九日目', '十日目'];
@@ -24,6 +24,14 @@ export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({ onOpenBook
   const [tourType, setTourType] = useState<'group' | 'private'>('group');
 
   const calculatedUSD = tourType === 'group' ? Math.round(pkg.priceUSD * 0.8) : pkg.priceUSD;
+
+  const defaultExclusions = [
+    'International Flight Airfare to/from Japan (Available upon request)',
+    'Japan Visa Application Fees & Personal Travel Insurance',
+    'Personal Laundry, Telephone Calls & Room Service Charges',
+    'Alcoholic Beverages outside scheduled Kaiseki banquets & Tea Ceremonies',
+    'Gratuities & tips for private drivers, local guides & hotel porters'
+  ];
 
   return (
     <div className="min-h-screen bg-[#FAF9F5] pt-24 pb-24 text-slate-900 font-jakarta">
@@ -86,7 +94,7 @@ export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({ onOpenBook
                 : 'border-transparent text-slate-400 hover:text-slate-700'
             }`}
           >
-            Inclusions & Privileges
+            Inclusions & Exclusions
           </button>
           <button
             onClick={() => setActiveTab('route')}
@@ -173,20 +181,45 @@ export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({ onOpenBook
               </div>
             )}
 
-            {/* TAB 2: Inclusions & Privileges */}
+            {/* TAB 2: Inclusions & Exclusions */}
             {activeTab === 'highlights' && (
-              <div className="space-y-6 bg-white p-8 border border-slate-200 shadow-sm">
+              <div className="space-y-8 bg-white p-8 border border-slate-200 shadow-sm">
+                {/* Section 1: Inclusions */}
                 <div className="space-y-4">
-                  <h3 className="font-cinzel text-xl font-bold text-slate-900 border-b border-slate-100 pb-3">
-                    INCLUDED PRIVILEGES & SERVICES
-                  </h3>
-                  <p className="text-xs text-slate-500 font-jakarta">
-                    All premium inclusions covered in your expedition package price:
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                  <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+                    <h3 className="font-cinzel text-xl font-bold text-slate-900">
+                      INCLUDED PRIVILEGES & SERVICES
+                    </h3>
+                    <span className="text-[11px] font-mono font-bold text-emerald-600 uppercase">
+                      ✓ WHAT'S INCLUDED
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                     {pkg.inclusions.map((item, idx) => (
-                      <div key={idx} className="flex items-start gap-3 text-xs text-slate-800 font-medium p-3 bg-slate-50 border border-slate-100">
+                      <div key={idx} className="flex items-start gap-3 text-xs text-slate-800 font-medium p-3 bg-emerald-50/40 border border-emerald-100">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Section 2: Exclusions */}
+                <div className="space-y-4 pt-4 border-t border-slate-200">
+                  <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+                    <h3 className="font-cinzel text-xl font-bold text-slate-900">
+                      EXCLUSIONS & OPTIONAL EXTRAS
+                    </h3>
+                    <span className="text-[11px] font-mono font-bold text-rose-600 uppercase">
+                      ✕ WHAT IS NOT INCLUDED
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                    {defaultExclusions.map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-3 text-xs text-slate-700 font-medium p-3 bg-rose-50/40 border border-rose-100">
+                        <XCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                         <span>{item}</span>
                       </div>
                     ))}
